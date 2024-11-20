@@ -1,0 +1,99 @@
+/* Light Mode */
+:root {
+	/* Primary Colors - より鮮やかなブルー */
+	--primary: #0079FF;
+	--primary-light: #45a3ff;
+	--primary-dark: #0057e6;
+	--primary-gradient: linear-gradient(145deg, #45a3ff, #0057e6);
+	--primary-accent: #00fff2;  /* アクセントとして使用する鮮やかな水色 */
+	
+	/* Secondary Colors - ビビッドな紫 */
+	--secondary: #9340FF;
+	--secondary-light: #ab6fff;
+	--secondary-dark: #7215f5;
+	--secondary-gradient: linear-gradient(145deg, #ab6fff, #7215f5);
+	--secondary-accent: #ff00e6;  /* アクセントとして使用する蛍光ピンク */
+	
+	/* Warning/Danger Colors - より強い赤 */
+	--danger: #FF3860;
+	--danger-light: #ff6b88;
+	--danger-dark: #e61a41;
+	--danger-gradient: linear-gradient(145deg, #ff6b88, #e61a41);
+	--danger-accent: #FFD93D;  /* アクセントとして使用する黄色 */
+	
+	/* Success Colors - 鮮やかなグリーン */
+	--success: #00E676;
+	--success-light: #33ff96;
+	--success-dark: #00b248;
+	--success-gradient: linear-gradient(145deg, #33ff96, #00b248);
+	
+	/* Background Colors - よりクリアな背景 */
+	--bg-main: #f0f5ff;
+	--bg-light: #ffffff;
+	--bg-dark: #e1e9ff;
+	--bg-gradient: linear-gradient(145deg, #ffffff, #e1e9ff);
+	
+	/* Shadow Colors for Neumorphism - より深いコントラスト */
+	--shadow-light: rgba(255, 255, 255, 0.8);
+	--shadow-dark: rgba(163, 177, 198, 0.7);
+	
+	/* Text Colors - よりシャープな文字色 */
+	--text-primary: #1a1a1a;
+	--text-secondary: #4a4a4a;
+	--text-disabled: #a3a3a3;
+	
+	/* Accent Gradients */
+	--gradient-vibrant1: linear-gradient(145deg, #00fff2, #0079FF);
+	--gradient-vibrant2: linear-gradient(145deg, #ff00e6, #9340FF);
+	--gradient-vibrant3: linear-gradient(145deg, #FFD93D, #FF3860);
+}
+	
+/* Dark Mode */
+.dark-theme {
+	/* Primary Colors */
+	--primary: #0079FF;
+	--primary-light: #45a3ff;
+	--primary-dark: #0057e6;
+	--primary-gradient: linear-gradient(145deg, #45a3ff, #0057e6);
+	--primary-accent: #00fff2;
+	
+	/* Secondary Colors */
+	--secondary: #9340FF;
+	--secondary-light: #ab6fff;
+	--secondary-dark: #7215f5;
+	--secondary-gradient: linear-gradient(145deg, #ab6fff, #7215f5);
+	--secondary-accent: #ff00e6;
+	
+	/* Warning/Danger Colors */
+	--danger: #FF3860;
+	--danger-light: #ff6b88;
+	--danger-dark: #e61a41;
+	--danger-gradient: linear-gradient(145deg, #ff6b88, #e61a41);
+	--danger-accent: #FFD93D;
+	
+	/* Success Colors */
+	--success: #00E676;
+	--success-light: #33ff96;
+	--success-dark: #00b248;
+	--success-gradient: linear-gradient(145deg, #33ff96, #00b248);
+	
+	/* Background Colors - ダークモードでもクリアな印象 */
+	--bg-main: #1a1f35;
+	--bg-light: #252b44;
+	--bg-dark: #141828;
+	--bg-gradient: linear-gradient(145deg, #252b44, #141828);
+	
+	/* Shadow Colors for Neumorphism */
+	--shadow-light: rgba(45, 51, 77, 0.7);
+	--shadow-dark: rgba(15, 17, 26, 0.7);
+	
+	/* Text Colors */
+	--text-primary: #ffffff;
+	--text-secondary: #e1e1e1;
+	--text-disabled: #888888;
+	
+	/* Accent Gradients */
+	--gradient-vibrant1: linear-gradient(145deg, #00fff2, #0079FF);
+	--gradient-vibrant2: linear-gradient(145deg, #ff00e6, #9340FF);
+	--gradient-vibrant3: linear-gradient(145deg, #FFD93D, #FF3860);
+}
