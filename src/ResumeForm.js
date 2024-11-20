@@ -14,6 +14,15 @@ export function ResumeForm() {
         address_1: '',
         address_2: '',
         address_kana: '',
+
+        education: {
+            education_1: {
+                year: '',
+                month: '',
+                schoolName: '',
+                department: '',
+            },
+        },
     });
     const [currentForm, setCurrentForm] = useState(0);
   
@@ -21,6 +30,31 @@ export function ResumeForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value})
     }
 
+    const handleEducation = (key, field, value) => {
+        setFormData({ ...formData, education: 
+            { ...formData.education,
+                [key]: {
+                    ...formData.education[key],
+                    [field]: value,
+                },
+            },
+        });
+    };
+
+    const addEducation = () => {
+        const nextKey = `education_${Object.keys(formData.education).length + 1}`;
+        setFormData({ ...formData, education: 
+            { ...formData.education,
+                [nextKey]: {
+                year: '',
+                month: '',
+                schoolName: '',
+                department: '',
+                },
+            },
+        });
+    };
+    
     const NextForm = () => {
         setCurrentForm(currentForm + 1);
     };
@@ -38,6 +72,7 @@ export function ResumeForm() {
         <div>
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 2 && <ResumeForm3 data={formData} handleEducation={handleEducation} addEducation={addEducation} onNext={NextForm} onPrev={PrevForm} />}
         </div>
     );
 }
@@ -158,31 +193,34 @@ function IsCheckContents() {
     );
 }
 
-function ResumeForm3({ data, handleFormData, onNext, onPrev }) {
+function ResumeForm3({ data, handleEducation, addEducation, onNext, onPrev }) {
+    
     return (
         <div>
-            <div className='form-group'>
-                <label>学歴１ 年</label>
-                <input type='text' name="lastname" placeholder=''
-                value={data.lastname} onChange={handleFormData} />
-            </div>
-            <div>
-                <label>学歴１ 月</label>
-                <input type='text' placeholder=''></input>
-            </div>
-            <div>
-                <label>学歴１ 学校名</label>
-                <input type='text' placeholder=''></input>
-            </div>
-            <div>
-                <label>学歴１ 学科名</label>
-                <input type='text' placeholder=''></input>
-            </div>
-            <button>学歴を追加</button>
-            <button>次へ</button>
+            {Object.keys(data.education).map( (key, index) => (
+                <div key={key}>
+                    <div className='form-group'>
+                        <label>学歴{index + 1} 年</label>
+                        <input type='text' name="year" placeholder=''
+                        value={data.education[key].year} onChange={(e) => handleEducation(key, 'year', e.target.value)} />
+                    </div>
+                    <div>
+                        <label>学歴{index + 1} 月</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                    <div>
+                        <label>学歴{index + 1} 学校名</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                    <div>
+                        <label>学歴{index + 1} 学科名</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                </div>
+            ))}
+            <button onClick={addEducation}>学歴を追加</button>
+            <button onClick={onNext}>次へ</button>
+            <button onClick={onPrev}>戻る</button>
         </div>
     );
-}
-function AddForm({  }) {
-
-}
+};
