@@ -1,13 +1,54 @@
 import React, { useState } from "react";
 
-function ResumeForm1({ data, setFormData, onNext }) {
+export function ResumeForm() {
+    const [formData, setFormData] = useState({
+        lastname: '',
+        firstname: '',
+        lastname_kana: '',
+        firstname_kana: '',
+        birthdate: '',
+        gender: '',
+        email: '',
+        telno: '',
+        postalcode: '',
+        address_1: '',
+        address_2: '',
+        address_kana: '',
+    });
+    const [currentForm, setCurrentForm] = useState(0);
+  
+    const handleFormData = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value})
+    }
+
+    const NextForm = () => {
+        setCurrentForm(currentForm + 1);
+    };
+
+    const PrevForm = () => {
+        setCurrentForm(currentForm - 1);
+    }
+ 
+    // 最終的にPHPに送信する
+    // const handleSubmit = () => {
+
+    // }
+
+    return ( 
+        <div>
+            {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} onNext={NextForm} />}
+            {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
+        </div>
+    );
+}
+
+function ResumeForm1({ data, handleFormData, onNext }) {
     return (
         <div>
             <div className='form-group'>
                 <label>姓</label>
-                <input type='text' placeholder=''
-                onChange={(e) => setFormData({ ...FormData, name: e.target.value })}
-                />
+                <input type='text' name="lastname" placeholder=''
+                value={data.lastname} onChange={handleFormData} />
             </div>
             <div>
                 <label>名</label>
@@ -34,7 +75,7 @@ function ResumeForm1({ data, setFormData, onNext }) {
     );
 }
 
-function ResumeForm2() {
+function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
 
     const [isChecked, setChecked ] = useState( false );
 
@@ -76,8 +117,8 @@ function ResumeForm2() {
               {isChecked && <IsCheckContents />}
             </div>
 
-            {/* <button onClick={onNext}>次へ</button>
-            <button onClick={onBack}>戻る</button> */}
+            <button onClick={onNext}>次へ</button>
+            <button onClick={onPrev}>戻る</button>
         </div>
     );
 }
@@ -117,18 +158,31 @@ function IsCheckContents() {
     );
 }
 
-export function ResumeForm() {
-    const [formData, setFormData] = useState({});
-    const [currentForm, setCurrentForm] = useState(0);
-  
-    const NextForm = () => {
-        setCurrentForm(currentForm + 1);
-    };
- 
-    return ( 
+function ResumeForm3({ data, handleFormData, onNext, onPrev }) {
+    return (
         <div>
-            {currentForm === 0 && <ResumeForm1 data={formData} setFormData={setFormData} onNext={NextForm} />}
-            {currentForm === 1 && <ResumeForm2 data={formData} setFormData={setFormData} onNext={NextForm} />}
+            <div className='form-group'>
+                <label>学歴１ 年</label>
+                <input type='text' name="lastname" placeholder=''
+                value={data.lastname} onChange={handleFormData} />
+            </div>
+            <div>
+                <label>学歴１ 月</label>
+                <input type='text' placeholder=''></input>
+            </div>
+            <div>
+                <label>学歴１ 学校名</label>
+                <input type='text' placeholder=''></input>
+            </div>
+            <div>
+                <label>学歴１ 学科名</label>
+                <input type='text' placeholder=''></input>
+            </div>
+            <button>学歴を追加</button>
+            <button>次へ</button>
         </div>
     );
+}
+function AddForm({  }) {
+
 }
