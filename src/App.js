@@ -17,17 +17,17 @@ function App() {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-
+  console.log(data.description)
   return (
     <div>
-      <h1>Data from API</h1>
-      <pre>{JSON.stringify(data.description.text, null, 2)}</pre>
+      {Object.keys(data.description).map(key => (
+        <p>{key}.....{data.description[key]}</p>
+      ))}
     </div>
   );
 }
