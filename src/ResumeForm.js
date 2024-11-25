@@ -31,11 +31,14 @@ export function ResumeForm() {
  
     // 最終的にPHPに送信する
     // const handleSubmit = () => {
-
+        
     // }
+        
+    
 
-    return ( 
-        <div>
+        
+        return ( 
+            <div>
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
         </div>
@@ -43,16 +46,50 @@ export function ResumeForm() {
 }
 
 function ResumeForm1({ data, handleFormData, onNext }) {
+    const [inputText, setInputText] = useState('');
+    const [inputName, setInputName] = useState('');
+    const [responseText, setResponseText] = useState('');
+
+    
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // デフォルトのフォーム送信を防止
+    
+        try {
+          // fetchを使う場合
+          const response = await fetch('http://localhost/AIChat/api-test-resume.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: inputText,name : inputName}), // APIに送信するデータ
+          });
+    
+          if (!response.ok) {
+            throw new Error('APIリクエストに失敗しました');
+          }
+    
+          const data = await response.json(); // レスポンスデータをJSONで取得
+          setResponseText(data); // レスポンスのテキストを保存
+          console.log(responseText);
+        } catch (error) {
+          console.error('エラー:', error);
+          setResponseText('エラーが発生しました');
+        }
+      };
+    
     return (
         <div>
+            <form onSubmit={handleSubmit}>
             <div className='form-group'>
                 <label>姓</label>
                 <input type='text' name="lastname" placeholder=''
-                value={data.lastname} onChange={handleFormData} />
+                value={inputText} onChange={(e) => setInputText(e.target.value)} />
             </div>
             <div>
                 <label>名</label>
-                <input type='text' placeholder=''></input>
+                <input type='text' placeholder=''
+                value={inputName} onChange={e => setInputName(e.target.value)}></input>
             </div>
             <div>
                 <label>姓（かな）</label>
@@ -71,6 +108,8 @@ function ResumeForm1({ data, handleFormData, onNext }) {
                 <input type='text' placeholder=''></input>
             </div>
             <button onClick={onNext}>次へ</button>
+            <button type="submit">テスト送信</button>
+            </form>
         </div>
     );
 }
