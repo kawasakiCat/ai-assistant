@@ -21,26 +21,47 @@ export function ResumeForm() {
                 month: '',
                 schoolName: '',
                 department: '',
+                status: '',
             },
+        },
+        workExperience: {
+            workExperience_1: {
+                year: '',
+                month: '',
+                companyName: '',
+                status: '',
+                jobDescription: '',
+            }
+        },
+        certification: {
+            certification_1: {
+                year: '',
+                month: '',
+                certification: '',
+                status: '',
+            }
         },
     });
     const [currentForm, setCurrentForm] = useState(0);
   
+    //履歴書情報変更ハンドラー
     const handleFormData = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
     }
 
-    const handleEducation = (key, field, value) => {
-        setFormData({ ...formData, education: 
-            { ...formData.education,
+    //学歴情報変更ハンドラー
+    const handleEducation = (fieldGroup, key, field, value) => {
+        setFormData({ ...formData, [fieldGroup]: 
+            { ...formData[fieldGroup],
                 [key]: {
-                    ...formData.education[key],
+                    ...formData[fieldGroup][key],
                     [field]: value,
                 },
             },
         });
     };
 
+    //学歴情報追加ハンドラー
     const addEducation = () => {
         const nextKey = `education_${Object.keys(formData.education).length + 1}`;
         setFormData({ ...formData, education: 
@@ -50,29 +71,81 @@ export function ResumeForm() {
                 month: '',
                 schoolName: '',
                 department: '',
+                status: '',
                 },
             },
         });
     };
-    
+
+    //職歴情報追加ハンドラー
+    const addWorkExperience = () => {
+        const nextKey = `workExperience_${Object.keys(formData.workExperience).length + 1}`;
+        setFormData({ ...formData, workExperience: 
+            { ...formData.workExperience,
+                [nextKey]: {
+                year: '',
+                month: '',
+                companyName: '',
+                status: '',
+                jobDescription: '',
+                },
+            },
+        });
+    };
+
+    //資格情報追加ハンドラー
+    const addCertifications = () => {
+        const nextKey = `workExperience_${Object.keys(formData.certification).length + 1}`;
+        setFormData({ ...formData, certification: 
+            { ...formData.certification,
+                [nextKey]: {
+                year: '',
+                month: '',
+                certification: '',
+                status: '',
+                },
+            },
+        });
+    };
+        
     const NextForm = () => {
         setCurrentForm(currentForm + 1);
     };
 
     const PrevForm = () => {
         setCurrentForm(currentForm - 1);
-    }
+    };
  
-    // 最終的にPHPに送信する
-    // const handleSubmit = () => {
+    const handleSubmit = async () => {
+        try {
+            console.log(formData);
+            const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/api-test-resume.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: formData,
+            });
+            
+            console.log(response);
 
-    // }
-
+            if (response.ok) {
+                alert('フォームが送信されました！');
+            } else {
+                alert('送信に失敗しました。');
+            }
+        } catch (error) {
+          console.error('送信エラー:', error);
+        }
+      };
+      
     return ( 
         <div>
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
-            {currentForm === 2 && <ResumeForm3 data={formData} handleEducation={handleEducation} addEducation={addEducation} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 2 && <ResumeForm3 data={formData} handleEducation={handleEducation} addFunction={addEducation} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 3 && <ResumeForm4 data={formData} handleEducation={handleEducation} addFunction={addWorkExperience} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 4 && <ResumeForm5 data={formData} handleEducation={handleEducation} addFunction={addCertifications} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
         </div>
     );
 }
@@ -193,8 +266,7 @@ function IsCheckContents() {
     );
 }
 
-function ResumeForm3({ data, handleEducation, addEducation, onNext, onPrev }) {
-    
+function ResumeForm3({ data, handleEducation, addFunction, onNext, onPrev }) {
     return (
         <div>
             {Object.keys(data.education).map( (key, index) => (
@@ -202,7 +274,7 @@ function ResumeForm3({ data, handleEducation, addEducation, onNext, onPrev }) {
                     <div className='form-group'>
                         <label>学歴{index + 1} 年</label>
                         <input type='text' name="year" placeholder=''
-                        value={data.education[key].year} onChange={(e) => handleEducation(key, 'year', e.target.value)} />
+                        value={data.education[key].year} onChange={(e) => handleEducation('education', key, 'year', e.target.value)} />
                     </div>
                     <div>
                         <label>学歴{index + 1} 月</label>
@@ -216,11 +288,109 @@ function ResumeForm3({ data, handleEducation, addEducation, onNext, onPrev }) {
                         <label>学歴{index + 1} 学科名</label>
                         <input type='text' placeholder=''></input>
                     </div>
+                    <div>
+                        <label>学歴{index + 1} ステータス</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
                 </div>
             ))}
-            <button onClick={addEducation}>学歴を追加</button>
+            <button onClick={addFunction}>学歴を追加</button>
             <button onClick={onNext}>次へ</button>
             <button onClick={onPrev}>戻る</button>
         </div>
     );
 };
+
+function ResumeForm4({ data, handleEducation, addFunction, onNext, onPrev }) {
+    return (
+        <div>
+            {Object.keys(data.workExperience).map( (key, index) => (
+                <div key={key}>
+                    <div className='form-group'>
+                        <label>職歴{index + 1} 年</label>
+                        <input type='text' name="year" placeholder=''
+                        value={data.workExperience[key].year} onChange={(e) => handleEducation('workExperience', key, 'year', e.target.value)} />
+                    </div>
+                    <div>
+                        <label>職歴{index + 1} 月</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                    <div>
+                        <label>職歴{index + 1} 会社名</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                    <div>
+                        <label>職歴{index + 1} ステータス</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                    <div>
+                        <label>職歴{index + 1} 職務内容</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                </div>
+            ))}
+            <button onClick={addFunction}>職歴を追加</button>
+            <button onClick={onNext}>次へ</button>
+            <button onClick={onPrev}>戻る</button>
+
+        </div>
+    );
+};
+
+function ResumeForm5({ data, handleEducation, addFunction, onNext, onPrev, submit }) {
+    return (
+        <div>
+            {Object.keys(data.certification).map( (key, index) => (
+                <div key={key}>
+                    <div className='form-group'>
+                        <label>免許・資格{index + 1} 年</label>
+                        <input type='text' name="year" placeholder=''
+                        value={data.certification[key].year} onChange={(e) => handleEducation('certification', key, 'year', e.target.value)} />
+                    </div>
+                    <div>
+                        <label>免許・資格{index + 1} 月</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                    <div>
+                        <label>免許・資格{index + 1} 免許・資格名称</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                    <div>
+                        <label>免許・資格{index + 1} ステータス</label>
+                        <input type='text' placeholder=''></input>
+                    </div>
+                </div>
+            ))}
+            <button onClick={addFunction}>免許・資格を追加</button>
+            <button onClick={onNext}>次へ</button>
+            <button onClick={onPrev}>戻る</button>
+            <button onClick={submit}>送信</button>
+
+        </div>
+    );
+};
+
+// function ResumeForm6({ data, handleFormData, onNext, onPrev, submit }) {
+//     return (
+//         <div>
+//             <div className='form-group'>
+//                 <label>志望動機</label>
+//                 <input type='text' name="lastname" placeholder=''
+//                 value={data.} onChange={handleFormData} />
+//             </div>
+//             <div>
+//                 <label>自己PR</label>
+//                 <input type='text' placeholder=''></input>
+//             </div>
+//             <div>
+//                 <label>姓（かな）</label>
+//                 <input type='text' placeholder=''></input>
+//             </div>
+
+//             <button onClick={onNext}>次へ</button>
+//             <button onClick={onPrev}>戻る</button>
+//             <button onClick={submit}>送信</button>
+
+//         </div>
+//     );
+// };
