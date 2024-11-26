@@ -6,6 +6,8 @@
 	--primary-dark: #0057e6;
 	--primary-gradient: linear-gradient(145deg, #45a3ff, #0057e6);
 	--primary-accent: #00fff2;  /* アクセントとして使用する鮮やかな水色 */
+	--primary-gradient-menu: linear-gradient(145deg, rgba(69, 163, 255, 0.8), rgba(0, 87, 230, 0.8));
+
 	
 	/* Secondary Colors - ビビッドな紫 */
 	--secondary: #9340FF;

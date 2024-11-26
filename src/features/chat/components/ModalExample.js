@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Modal from '../../../components/common/Modal/Modal';
 import Button from '../../../components/common/Button/Button';
-import './ModalExample.css';
 
 const ModalExample = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
