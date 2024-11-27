@@ -14,7 +14,6 @@ export function ResumeForm() {
         address_1: '',
         address_2: '',
         address_kana: '',
-
         education: {
             education_1: {
                 year: '',
@@ -31,7 +30,7 @@ export function ResumeForm() {
                 companyName: '',
                 status: '',
                 jobDescription: '',
-            }
+            },
         },
         certification: {
             certification_1: {
@@ -39,7 +38,7 @@ export function ResumeForm() {
                 month: '',
                 certification: '',
                 status: '',
-            }
+            },
         },
     });
     const [currentForm, setCurrentForm] = useState(0);
@@ -50,7 +49,7 @@ export function ResumeForm() {
     }
 
     //学歴情報変更ハンドラー
-    const handleEducation = (fieldGroup, key, field, value) => {
+    const handleFormGroup = (fieldGroup, key, field, value) => {
         setFormData({ ...formData, [fieldGroup]: 
             { ...formData[fieldGroup],
                 [key]: {
@@ -94,8 +93,8 @@ export function ResumeForm() {
     };
 
     //資格情報追加ハンドラー
-    const addCertifications = () => {
-        const nextKey = `workExperience_${Object.keys(formData.certification).length + 1}`;
+    const addCertification = () => {
+        const nextKey = `certification_${Object.keys(formData.certification).length + 1}`;
         setFormData({ ...formData, certification: 
             { ...formData.certification,
                 [nextKey]: {
@@ -124,15 +123,17 @@ export function ResumeForm() {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: formData,
+            body: JSON.stringify(formData),
             });
+
+            const result = await response.json();
             
-            console.log(response);
+            console.log(result);
 
             if (response.ok) {
-                alert('フォームが送信されました！');
+                console.log('フォームが送信されました！');
             } else {
-                alert('送信に失敗しました。');
+                console.log('送信に失敗しました。');
             }
         } catch (error) {
           console.error('送信エラー:', error);
@@ -143,9 +144,9 @@ export function ResumeForm() {
         <div>
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
-            {currentForm === 2 && <ResumeForm3 data={formData} handleEducation={handleEducation} addFunction={addEducation} onNext={NextForm} onPrev={PrevForm} />}
-            {currentForm === 3 && <ResumeForm4 data={formData} handleEducation={handleEducation} addFunction={addWorkExperience} onNext={NextForm} onPrev={PrevForm} />}
-            {currentForm === 4 && <ResumeForm5 data={formData} handleEducation={handleEducation} addFunction={addCertifications} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
+            {currentForm === 2 && <ResumeForm3 data={formData} handleFormGroup={handleFormGroup} addFunction={addEducation} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 3 && <ResumeForm4 data={formData} handleFormGroup={handleFormGroup} addFunction={addWorkExperience} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 4 && <ResumeForm5 data={formData} handleFormGroup={handleFormGroup} addFunction={addCertification} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
         </div>
     );
 }
@@ -266,7 +267,7 @@ function IsCheckContents() {
     );
 }
 
-function ResumeForm3({ data, handleEducation, addFunction, onNext, onPrev }) {
+function ResumeForm3({ data, handleFormGroup, addFunction, onNext, onPrev }) {
     return (
         <div>
             {Object.keys(data.education).map( (key, index) => (
@@ -274,7 +275,7 @@ function ResumeForm3({ data, handleEducation, addFunction, onNext, onPrev }) {
                     <div className='form-group'>
                         <label>学歴{index + 1} 年</label>
                         <input type='text' name="year" placeholder=''
-                        value={data.education[key].year} onChange={(e) => handleEducation('education', key, 'year', e.target.value)} />
+                        value={data.education[key].year} onChange={(e) => handleFormGroup('education', key, 'year', e.target.value)} />
                     </div>
                     <div>
                         <label>学歴{index + 1} 月</label>
@@ -301,7 +302,7 @@ function ResumeForm3({ data, handleEducation, addFunction, onNext, onPrev }) {
     );
 };
 
-function ResumeForm4({ data, handleEducation, addFunction, onNext, onPrev }) {
+function ResumeForm4({ data, handleFormGroup, addFunction, onNext, onPrev }) {
     return (
         <div>
             {Object.keys(data.workExperience).map( (key, index) => (
@@ -309,7 +310,7 @@ function ResumeForm4({ data, handleEducation, addFunction, onNext, onPrev }) {
                     <div className='form-group'>
                         <label>職歴{index + 1} 年</label>
                         <input type='text' name="year" placeholder=''
-                        value={data.workExperience[key].year} onChange={(e) => handleEducation('workExperience', key, 'year', e.target.value)} />
+                        value={data.workExperience[key].year} onChange={(e) => handleFormGroup('workExperience', key, 'year', e.target.value)} />
                     </div>
                     <div>
                         <label>職歴{index + 1} 月</label>
@@ -337,7 +338,7 @@ function ResumeForm4({ data, handleEducation, addFunction, onNext, onPrev }) {
     );
 };
 
-function ResumeForm5({ data, handleEducation, addFunction, onNext, onPrev, submit }) {
+function ResumeForm5({ data, handleFormGroup, addFunction, onNext, onPrev, submit }) {
     return (
         <div>
             {Object.keys(data.certification).map( (key, index) => (
@@ -345,7 +346,7 @@ function ResumeForm5({ data, handleEducation, addFunction, onNext, onPrev, submi
                     <div className='form-group'>
                         <label>免許・資格{index + 1} 年</label>
                         <input type='text' name="year" placeholder=''
-                        value={data.certification[key].year} onChange={(e) => handleEducation('certification', key, 'year', e.target.value)} />
+                        value={data.certification[key].year} onChange={(e) => handleFormGroup('certification', key, 'year', e.target.value)} />
                     </div>
                     <div>
                         <label>免許・資格{index + 1} 月</label>
