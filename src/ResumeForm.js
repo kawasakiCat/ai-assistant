@@ -14,6 +14,12 @@ export function ResumeForm() {
         address1: '',
         address2: '',
         addressKana: '',
+        spareEmail: '',
+        spareTelNo: '',
+        sparePostalCode: '',
+        spareAddress1: '',
+        spareAddress2: '',
+        spareAddressKana: '',
         education: {
             education1: {
                 year: '',
