@@ -1,4 +1,6 @@
 .sliding-menu-container {
+	display: flex;
+	justify-content: center;
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
@@ -6,13 +8,11 @@
 }
 
 .menu-toggle-button {
-	width: 48px !important;
-	height: 48px !important;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	transition: transform 0.2s ease-in-out;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	/* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 .menu-toggle-button:hover {
@@ -21,7 +21,10 @@
 
 .menu-title {
 	color: var(--text-primary);
-
+	grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 1;
+  	grid-row-end: 3;
 }
 
 .menu-icon {
@@ -50,6 +53,7 @@
 	padding: 16px;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: auto 1fr 1fr;
 	grid-gap: 12px;
 	position: absolute;
 	bottom: 60px;

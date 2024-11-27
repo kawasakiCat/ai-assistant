@@ -1,13 +1,23 @@
 import './App.css';
-import { ResumeForm } from './ResumeForm';
+// import { ResumeForm } from './ResumeForm';
+import React from 'react';
+import Button from './components/common/Button/Button';
+import Input from './components/common/Input/Input';
+import ModalExample from './features/chat/components/ModalExample';
+import Navigation from './components/common/Navigation/Navigation';
+import ChatWindow from './features/chat/components/ChatWindow';
 
 function App() {
 
   return (
     <div className="App">
-      {/* <h1 className='title-text'>就活<br></br>アシスタント<br></br>アプリ</h1> */}
-      <ResumeForm />
-      {/* <form className='resume-form'></form> */}
+      <Button onClick={() => console.log('ボタンを押された')}>
+        クリック
+      </Button>
+
+      <ModalExample />
+      
+      <Navigation />
     </div>
   );
 }
