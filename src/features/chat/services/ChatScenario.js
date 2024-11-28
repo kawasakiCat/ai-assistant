@@ -72,7 +72,29 @@ export const scenarios = [
 	{
 		"id": "app_overview",
 		"message": "本アプリケーションは主な利用者たる就活生をサポートすることを目的としています。具体的には、履歴書やエントリーシート用に書く志望動機や自己PRをチャット形式で生成できる機能とフォームに入力したデータを基に履歴書ファイルを出力できる機能を提供します。",
-		"next": "help"
+		"options": [
+			{ "text": "使い方を教えて", "next": "app_usage_guide"},
+			{ "text": "あなたは誰ですか", "next": "assistant_introduction"},
+			{ "text": "聞きたいことはない", "next": "help_end"},
+		]
+	},
+	{
+		"id": "assistant_introduction",
+		"message": "おまえ",
+		"options": [
+			{ "text": "このアプリは何？", "next": "app_overview"},
+			{ "text": "使い方を教えて", "next": "app_usage_guide"},
+			{ "text": "聞きたいことはない", "next": "help_end"},
+		]
+	},
+	{
+		"id": "app_usage_guide",
+		"message": "雰囲気で分かってください",
+		"options": [
+			{ "text": "このアプリは何？", "next": "app_overview"},
+			{ "text": "あなたは誰ですか", "next": "assistant_introduction"},
+			{ "text": "聞きたいことはない", "next": "help_end"},
+		]
 	},
 	{
 	  "id": "help_end",
