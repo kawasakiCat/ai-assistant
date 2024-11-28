@@ -1,27 +1,22 @@
+// ChatWindow.js
 import React, { useState } from 'react';
-import { getScenarioById } from '../services/ScenarioManager';
-import MessageList from './MessageList';
-import MessageInput from './MessageInput';
+import { scenarios } from '../services/ChatScenario';
+// import MessageList from './MessageList';
+// import MessageInput from './MessageInput';
+import Button from '../../../components/common/Button/Button';
 
 const ChatWindow = () => {
-  const [currentScenarioId, setCurrentScenarioId] = useState('welcome');
-  const [messages, setMessages] = useState([]);
-
-  const handleUserInput = (input) => {
-    const currentScenario = getScenarioById(currentScenarioId);
-    const nextScenarioId = currentScenario?.options?.find(option => option.text === input)?.next;
-
-    if (nextScenarioId) {
-      const nextScenario = getScenarioById(nextScenarioId);
-      setMessages([...messages, { type: 'user', text: input }, { type: 'bot', text: nextScenario.message }]);
-      setCurrentScenarioId(nextScenarioId);
-    }
-  };
+  const [currentScenarioId, setCurrentScenarioId] = useState("welcome");
+  const currentScenario = scenarios.find(scenario => scenario.id === currentScenarioId);
 
   return (
     <div>
-      <MessageList messages={messages} />
-      <MessageInput onSubmit={handleUserInput} />
+      <p>{currentScenario.message}</p>
+      {currentScenario.options?.map(option => (
+        <Button key={option.next} onClick={() => setCurrentScenarioId(option.next)}>
+          {option.text}
+        </Button>
+      ))}
     </div>
   );
 };
