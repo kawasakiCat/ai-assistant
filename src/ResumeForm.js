@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Input from './components/common/Input/Input';
 
 export function ResumeForm() {
     const [formData, setFormData] = useState({
@@ -185,34 +186,22 @@ function ResumeForm1({ data, handleFormData, onNext }) {
     return (
         <div>
             <div className='form-group'>
-                <label>姓</label>
-                <input type='text' name="lastName" placeholder=''
-                value={data.lastName} onChange={handleFormData} />
+                <Input type='text' label="姓" name="lastName" value={data.lastName} onChange={handleFormData} required helperText="例: 秋田" />
             </div>
             <div>
-                <label>名</label>
-                <input type='text' name="firstName" placeholder=''
-                value={data.firstName} onChange={handleFormData} />
+                <Input type='text' label="名" name="firstName" value={data.firstName} onChange={handleFormData} required helperText="例: 心愛" />
             </div>
             <div>
-                <label>姓（かな）</label>
-                <input type='text' name="lastNameKana" placeholder=''
-                value={data.lastNameKana} onChange={handleFormData} />
+                <Input type='text' label="姓（かな）" name="lastNameKana" value={data.lastNameKana} onChange={handleFormData} required helperText="例: あきた" />
             </div>
             <div>
-                <label>名（かな）</label>
-                <input type='text' name="firstNameKana" placeholder=''
-                value={data.firstNameKana} onChange={handleFormData} />
+                <Input type='text' label="名（かな）" name="firstNameKana" value={data.firstNameKana} onChange={handleFormData} required helperText="例: こあ" />
             </div>
             <div>
-                <label>生年月日</label>
-                <input type='text' name="birthDate" placeholder=''
-                value={data.birthDate} onChange={handleFormData} />
+                <Input type='text' label="生年月日" name="birthDate" value={data.birthDate} onChange={handleFormData} required helperText="例: " />
             </div>
             <div>
-                <label>性別（任意）</label>
-                <input type='text' name="gender" placeholder=''
-                value={data.gender} onChange={handleFormData} />
+                <Input type='text' label="性別（任意）" name="gender" value={data.gender} onChange={handleFormData} required helperText="例: 女" />
             </div>
             <button onClick={onNext}>次へ</button>
         </div>
@@ -226,42 +215,58 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
     const handleCheckChange = ( e ) => {
       setChecked(e.target.checked);
     };
+
+    const IsCheckContents = () => {
+        return (
+            <div className='isCheckContents'>
+                <div>
+                    <label>本人以外の連絡先</label>
+                </div>
+                <div className='form-group'>
+                    <Input type='text' label="メールアドレス" name="spareEmail" value={data.spareEmail} onChange={handleFormData} required helperText="例: koa2@sample.com" />
+                </div>
+                <div>
+                    <Input type='text' label="電話番号" name="spareTelNo" value={data.spareTelNo} onChange={handleFormData} required helperText="例: 08011112222" />
+                </div>
+                <div>
+                    <Input type='text' label="郵便番号" name="sparePostalCode" value={data.sparePostalCode} onChange={handleFormData} required helperText="例: 0100001" />
+                </div>
+                <div>
+                    <Input type='text' label="住所" name="spareAddress1" value={data.spareAddress1} onChange={handleFormData} required helperText="例: " />
+                </div>
+                <div>
+                    <Input type='text' label="住所（番地・建物名）" name="spareAddress2" value={data.spareAddress2} onChange={handleFormData} required helperText="例: " />
+                </div>
+                <div>
+                    <Input type='text' label="住所（かな）" name="spareAddressKana" value={data.spareAddressKana} onChange={handleFormData} required helperText="例: " />
+                </div>
+            </div>
+        );
+    }
   
     return (
         <div>
             <div className='form-group'>
-                <label>メールアドレス</label>
-                <input type='text' name="email" placeholder=''
-                value={data.email} onChange={handleFormData} />
+                <Input type='text' label="メールアドレス" name="email" value={data.email} onChange={handleFormData} required helperText="例: koa1@sample.com" />
             </div>
             <div>
-                <label>電話番号</label>
-                <input type='text' name="telNo" placeholder=''
-                value={data.telNo} onChange={handleFormData} />
+                <Input type='text' label="電話番号" name="telNo" value={data.telNo} onChange={handleFormData} required helperText="例: 08000001111" />
             </div>
             <div>
-                <label>郵便番号</label>
-                <input type='text' name="postalCode" placeholder=''
-                value={data.postalCode} onChange={handleFormData} />
+                <Input type='text' label="郵便番号" name="postalCode" value={data.postalCode} onChange={handleFormData} required helperText="例: 0100001" />
             </div>
             <div>
-                <label>住所</label>
-                <input type='text' name="address1" placeholder=''
-                value={data.address1} onChange={handleFormData} />
+                <Input type='text' label="住所" name="address1" value={data.address1} onChange={handleFormData} required helperText="例: " />
             </div>
             <div>
-                <label>住所（番地・建物名）</label>
-                <input type='text' name="address2" placeholder=''
-                value={data.address2} onChange={handleFormData} />
+                <Input type='text' label="住所（番地・建物名）" name="address2" value={data.address2} onChange={handleFormData} required helperText="例: " />
             </div>
             <div>
-                <label>住所（かな）</label>
-                <input type='text' name="addressKana" placeholder=''
-                value={data.addressKana} onChange={handleFormData} />
+                <Input type='text' label="住所（かな）" name="addressKana" value={data.addressKana} onChange={handleFormData} required helperText="例: " />
             </div>
 
             <div>
-              <input type='checkbox' checked={isChecked} onChange={handleCheckChange}></input>
+              <input type='checkbox' checked={isChecked} onChange={handleCheckChange} />
               <label>現住所以外に連絡を希望する場合</label>
 
               {isChecked && <IsCheckContents />}
@@ -273,69 +278,28 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
     );
 }
 
-function IsCheckContents() {
-    return (
-      <div className='isCheckContents'>
-        <div>
-          <label>本人以外の連絡先</label>
-        </div>
-  
-        <div className='form-group'>
-            <label>メールアドレス</label>
-            <input type='text' placeholder=''></input>
-        </div>
-        <div>
-            <label>電話番号</label>
-            <input type='text' placeholder=''></input>
-        </div>
-        <div>
-            <label>郵便番号</label>
-            <input type='text' placeholder=''></input>
-        </div>
-        <div>
-            <label>住所</label>
-            <input type='text' placeholder=''></input>
-        </div>
-        <div>
-            <label>住所（番地・建物名）</label>
-            <input type='text' placeholder=''></input>
-        </div>
-        <div>
-            <label>住所（かな）</label>
-            <input type='text' placeholder=''></input>
-        </div>
-      </div>
-    );
-}
-
 function ResumeForm3({ data, handleFormGroup, addFunction, onNext, onPrev }) {
     return (
         <div>
             {Object.keys(data.education).map( (key, index) => (
                 <div key={key}>
                     <div className='form-group'>
-                        <label>学歴{index + 1} 年</label>
-                        <input type='text' name="year" placeholder=''
-                        value={data.education[key].year} onChange={(e) => handleFormGroup('education', key, 'year', e.target.value)} />
+                        <Input type='text' label={`学歴 ${index + 1}  年`} name="year" value={data.education[key].year} onChange={(e) => handleFormGroup('education', key, 'year', e.target.value)} required helperText="例: 2024" />
                     </div>
                     <div>
-                        <label>学歴{index + 1} 月</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`学歴${index + 1}  月`} name="month" value={data.education[key].month} onChange={(e) => handleFormGroup('education', key, 'month', e.target.value)} required helperText="例: 4" />
                     </div>
                     <div>
-                        <label>学歴{index + 1} 学校名</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`学歴${index + 1}  学校名`} name="schoolName" value={data.education[key].schoolName} onChange={(e) => handleFormGroup('education', key, 'schoolName', e.target.value)} required helperText="例: 学校法人コア学園　秋田コアビジネスカレッジ" />
                     </div>
                     <div>
-                        <label>学歴{index + 1} 学科名</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`学歴${index + 1}  学科名`} name="department" value={data.education[key].department} onChange={(e) => handleFormGroup('education', key, 'department', e.target.value)} required helperText="例: 情報システム科　IT・アプリコース" />
                     </div>
                     <div>
-                        <label>学歴{index + 1} ステータス</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`学歴${index + 1}  ステータス`} name="status" value={data.education[key].status} onChange={(e) => handleFormGroup('education', key, 'status', e.target.value)} required helperText="例: 入学" />
                     </div>
                 </div>
-            ))}
+            ))};
             <button onClick={addFunction}>学歴を追加</button>
             <button onClick={onNext}>次へ</button>
             <button onClick={onPrev}>戻る</button>
@@ -349,25 +313,19 @@ function ResumeForm4({ data, handleFormGroup, addFunction, onNext, onPrev }) {
             {Object.keys(data.workExperience).map( (key, index) => (
                 <div key={key}>
                     <div className='form-group'>
-                        <label>職歴{index + 1} 年</label>
-                        <input type='text' name="year" placeholder=''
-                        value={data.workExperience[key].year} onChange={(e) => handleFormGroup('workExperience', key, 'year', e.target.value)} />
+                        <Input type='text' label={`職歴${index + 1}  年`} name="year" value={data.workExperience[key].year} onChange={(e) => handleFormGroup('workExperience', key, 'year', e.target.value)} required helperText="例: 2024" />
                     </div>
                     <div>
-                        <label>職歴{index + 1} 月</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`職歴${index + 1}  月`} name="month" value={data.workExperience[key].month} onChange={(e) => handleFormGroup('workExperience', key, 'month', e.target.value)} required helperText="例: 4" />
                     </div>
                     <div>
-                        <label>職歴{index + 1} 会社名</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`職歴${index + 1}  会社名`} name="companyName" value={data.workExperience[key].companyName} onChange={(e) => handleFormGroup('workExperience', key, 'companyName', e.target.value)} required helperText="例: 株式会社情報カンパニー" />
                     </div>
                     <div>
-                        <label>職歴{index + 1} ステータス</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`職歴${index + 1}  ステータス`} name="status" value={data.workExperience[key].status} onChange={(e) => handleFormGroup('workExperience', key, 'status', e.target.value)} required helperText="例: 入社" />
                     </div>
                     <div>
-                        <label>職歴{index + 1} 職務内容</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`職歴${index + 1}  職務内容`} name="jobDescription" value={data.workExperience[key].jobDescription} onChange={(e) => handleFormGroup('workExperience', key, 'jobDescription', e.target.value)} required helperText="例: " />
                     </div>
                 </div>
             ))}
@@ -385,21 +343,16 @@ function ResumeForm5({ data, handleFormGroup, addFunction, onNext, onPrev }) {
             {Object.keys(data.certification).map( (key, index) => (
                 <div key={key}>
                     <div className='form-group'>
-                        <label>免許・資格{index + 1} 年</label>
-                        <input type='text' name="year" placeholder=''
-                        value={data.certification[key].year} onChange={(e) => handleFormGroup('certification', key, 'year', e.target.value)} />
+                        <Input type='text' label={`免許・資格${index + 1}  年`} name="year" value={data.certification[key].year} onChange={(e) => handleFormGroup('certification', key, 'year', e.target.value)} required helperText="例: 2024" />
                     </div>
                     <div>
-                        <label>免許・資格{index + 1} 月</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`免許・資格${index + 1}  月`} name="month" value={data.certification[key].month} onChange={(e) => handleFormGroup('certification', key, 'month', e.target.value)} required helperText="例: 4" />
                     </div>
                     <div>
-                        <label>免許・資格{index + 1} 免許・資格名称</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`免許・資格${index + 1}  免許・資格名称`} name="certification" value={data.certification[key].certification} onChange={(e) => handleFormGroup('certification', key, 'certification', e.target.value)} required helperText="例: 経済産業省情報処理技術者試験　基本情報技術者" />
                     </div>
                     <div>
-                        <label>免許・資格{index + 1} ステータス</label>
-                        <input type='text' placeholder=''></input>
+                        <Input type='text' label={`免許・資格${index + 1}  ステータス`} name="status" value={data.certification[key].status} onChange={(e) => handleFormGroup('certification', key, 'status', e.target.value)} required helperText="例: 合格" />
                     </div>
                 </div>
             ))}
@@ -418,16 +371,12 @@ function ResumeForm6({ data, textCount, handleFormData, onNext, onPrev }) {
     return (
         <div>
             <div className='form-group'>
-                <label>志望動機</label>
-                <input type='text' name="motivation" placeholder=''
-                value={data.motivation} onChange={handleFormData} />
+                <Input type='text' label="志望動機" name="motivation" value={data.motivation} onChange={handleFormData} required />
                 <div>{textCount.motivation} / 400</div>
                 {/* <p><div style={{ color: remainingMotivation < 10 ? 'yellow' : 'black' }}>{textCount.selfPromotion}</div> / 400</p> */}
             </div>
             <div>
-                <label>自己PR</label>
-                <input type='text' name="selfPromotion" placeholder=''
-                value={data.selfPromotion} onChange={handleFormData} />
+                <Input type='text' label="自己ＰＲ" name="selfPromotion" value={data.selfPromotion} onChange={handleFormData} required />
                 <div>{textCount.selfPromotion} / 400</div>
                 {/* <p><div style={{ color: remainingSelfPromotion < 10 ? 'yellow' : 'black' }}>{textCount.selfPromotion}</div> / 400</p> */}
             </div>
@@ -442,15 +391,11 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
     return (
         <div>
             <div className='form-group'>
-                <label>本人希望欄</label>
-                <input type='text' name="freeSpace" placeholder=''
-                value={data.freeSpace} onChange={handleFormData} />
+                <Input type='text' label="本人希望欄" name="freeSpace" value={data.freeSpace} onChange={handleFormData} required helperText="例: 貴社の規定に従います。" />
                 <div>{textCount.freeSpace} / 150</div>
             </div>
             <div>
-                <label>履歴書提出日付</label>
-                <input type='text' name="submissionDate" placeholder=''
-                value={data.submissionDate} onChange={handleFormData} />
+                <Input type='text' label="履歴書提出日付" name="submissionDate" value={data.submissionDate} onChange={handleFormData} required helperText="例: " />
             </div>
 
             <button onClick={onNext}>プレビュー画面へ</button>
