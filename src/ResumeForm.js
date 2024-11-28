@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Input from './components/common/Input/Input';
+import TextArea from "./components/common/TextArea/TextArea";
 
 export function ResumeForm() {
     const [formData, setFormData] = useState({
@@ -371,12 +372,12 @@ function ResumeForm6({ data, textCount, handleFormData, onNext, onPrev }) {
     return (
         <div>
             <div className='form-group'>
-                <Input type='text' label="志望動機" name="motivation" value={data.motivation} onChange={handleFormData} required />
+                <TextArea type='text' label="志望動機" name="motivation" value={data.motivation} onChange={handleFormData} required />
                 <div>{textCount.motivation} / 400</div>
                 {/* <p><div style={{ color: remainingMotivation < 10 ? 'yellow' : 'black' }}>{textCount.selfPromotion}</div> / 400</p> */}
             </div>
             <div>
-                <Input type='text' label="自己ＰＲ" name="selfPromotion" value={data.selfPromotion} onChange={handleFormData} required />
+                <TextArea type='text' label="自己ＰＲ" name="selfPromotion" value={data.selfPromotion} onChange={handleFormData} required />
                 <div>{textCount.selfPromotion} / 400</div>
                 {/* <p><div style={{ color: remainingSelfPromotion < 10 ? 'yellow' : 'black' }}>{textCount.selfPromotion}</div> / 400</p> */}
             </div>
@@ -391,7 +392,7 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
     return (
         <div>
             <div className='form-group'>
-                <Input type='text' label="本人希望欄" name="freeSpace" value={data.freeSpace} onChange={handleFormData} required helperText="例: 貴社の規定に従います。" />
+                <TextArea type='text' label="本人希望欄" name="freeSpace" value={data.freeSpace} onChange={handleFormData} required helperText="例: 貴社の規定に従います。" />
                 <div>{textCount.freeSpace} / 150</div>
             </div>
             <div>
