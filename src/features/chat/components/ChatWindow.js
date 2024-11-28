@@ -4,6 +4,7 @@ import { scenarios } from '../services/ChatScenario';
 // import MessageList from './MessageList';
 // import MessageInput from './MessageInput';
 import Button from '../../../components/common/Button/Button';
+import ChatFormComponent from './ChatForm';
 
 const ChatWindow = () => {
   const [currentScenarioId, setCurrentScenarioId] = useState("welcome");
@@ -17,6 +18,7 @@ const ChatWindow = () => {
           {option.text}
         </Button>
       ))}
+    <ChatFormComponent />
     </div>
   );
 };
