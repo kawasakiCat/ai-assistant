@@ -1,20 +1,35 @@
 import React from "react";
 import { useChatFormData } from "../../../hooks/useChatFormData";
+import { submitMotivationForm, submitSelfPromotionForm } from "../services/chatService";
 import TextArea from "../../../components/common/TextArea/TextArea";
 import Button from "../../../components/common/Button/Button";
 import Input from "../../../components/common/Input/Input";
 
-const ChatFormComponent = () => {
-  const [formData, updateFormData] = useChatFormData({ name: "", email: "" });
+export function MotivationForm({ onFormSubmit }) {
+  const [formData, updateFormData] = useChatFormData({
+    targetIndustry: "",
+    targetCompany: "",
+    personalBackground:"",
+    careerGoals:"",
+    companyUnderstanting:"",
+    matchingElements:""
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     updateFormData(name, value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); // サーバー送信の例
+    console.log(formData);
+    // try {
+      const result = await submitMotivationForm(formData);
+      console.log("APIの結果:", result);
+      onFormSubmit(result);
+    // } catch (error) {
+      // console.error("送信中にエラー", error);
+    // }
   };
 
   return (
@@ -23,7 +38,7 @@ const ChatFormComponent = () => {
 				type="text"
 				label="志望業界"
 				name="targetIndustry"
-				value={formData.name}
+				value={formData.targetIndustry}
         onChange={handleInputChange}
 				required
 				helperText="例: 情報通信業"
@@ -77,4 +92,69 @@ const ChatFormComponent = () => {
   );
 };
 
-export default ChatFormComponent;
+export function SelfPromotionForm({ onFormSubmit }) {
+  const [formData, updateFormData] = useChatFormData({ strengths: "", studentExperience: "", achievements:"", personality:"", futureGoals:"" });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    updateFormData(name, value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    onFormSubmit();
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+			<TextArea
+				type="text"
+				label="あなたの強み"
+				name="strengths"
+				value={formData.strengths}
+        onChange={handleInputChange}
+				required
+				helperText="例: 得意な能力やスキル、専門的な技術や知識"
+        rows={2}
+			/>
+      <TextArea
+				type="text"
+				label="学生時代の経験"
+				name="studentExperience"
+				value={formData.studentExperience}
+        onChange={handleInputChange}
+				helperText="例: 学業での成果、サークル・部活動での役割と実績、ボランティア活動、インターンシップ"
+        rows={2}
+			/>
+			<TextArea
+				type="text"
+				label="具体的な成果"
+        name="achievements"
+        value={formData.achievements}
+        onChange={handleInputChange}
+        helperText="例: 数値化できる実績、リーダーシップを発揮した経験、問題解決した事例、チームでの貢献"
+        rows={2}
+			/>
+      <TextArea
+				type="text"
+				label="パーソナリティ"
+        name="personality"
+        value={formData.personality}
+        onChange={handleInputChange}
+        helperText="例: 性格の長所、コミュニケーション能力、学習意欲や成長への意思、仕事に対する姿勢や価値観"
+        rows={2}
+			/>
+      <TextArea
+				type="text"
+				label="今後の目標"
+        name="futureGoals"
+        value={formData.futureGoals}
+        onChange={handleInputChange}
+        helperText="例: 自己研鑽の方向性、キャリアで実現したいこと、スキルアップの計画、将来のビジョン"
+        rows={2}
+			/>
+      <Button type="submit" onClick={handleSubmit}>送信</Button>
+    </form>
+  );
+};
