@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import './Navigation.css';
 
@@ -26,29 +27,43 @@ const Navigation = () => {
       <div className={`menu-panel ${isOpen ? 'open' : ''}`}>
 		<h1 className="menu-title">Menu</h1>
         <div className="menu-item">
-          <Button className="menu-item-button" variant="primary">
-            文章生成
-          </Button>
+          <Link to="/chat" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              文章
+              <br />
+              生成
+            </Button>
+          </Link>
         </div>
         <div className="menu-item">
-          <Button className="menu-item-button" variant="primary">
-            履歴書作成
-          </Button>
+          <Link to="/resume" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              履歴書作成
+            </Button>
+          </Link>
         </div>
         <div className="menu-item">
-          <Button className="menu-item-button" variant="primary">
-            メモ
-          </Button>
+          <Link to="/memo" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              メモ
+            </Button>
+          </Link>
         </div>
         <div className="menu-item">
-          <Button className="menu-item-button" variant="primary">
-            設定
-          </Button>
+          <Link to="/settings" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              設定
+            </Button>
+          </Link>
         </div>
         <div className="menu-item">
-          <Button className="menu-item-button" variant="primary">
-            ログアウト
-          </Button>
+          <Link to="/login" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              ログ
+              <br />
+              イン
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

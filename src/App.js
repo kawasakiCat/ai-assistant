@@ -1,30 +1,29 @@
-import './App.css';
-// import { ResumeForm } from './ResumeForm';
-import React, { useState } from 'react';
-// import Button from './components/common/Button/Button';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/common/Navigation/Navigation';
-// import ModalExample from './ModalExample';
-// import InputExample from './InputExample';
-import ChatWindow from './features/chat/components/ChatWindow';
-// import ChatWindow from './features/chat/components/ChatWindow';
+import HomePage from './pages/HomePage';
+import ResumePage from './pages/ResumePage';
+import ChatPage from './pages/ChatPage';
+import MemoPage from './pages/MemoPage';
+import SettingsPage from './pages/SettingsPage';
+import LoginPage from './pages/LoginPage';
+import TitlePage from './pages/TitlePage';
 
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      {/* <Button onClick={() => console.log('ボタンを押された')}>
-        クリック
-      </Button> */}
-
-      {/* <ModalExample /> */}
-      {/* <InputExample /> */}
-
-      {/* <ResumeForm /> */}
-
-      <ChatWindow />
+    <Router>
       <Navigation />
-    </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/resume" element={<ResumePage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/memo" element={<MemoPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/title" element={<TitlePage />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
