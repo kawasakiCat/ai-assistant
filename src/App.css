@@ -8,19 +8,3 @@
   }
 }
 
-@media (max-width: 480px) {
-  header {
-    padding: 10px;
-  }
-
-  .resume-form {
-    text-align: center;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #B5C0D0;
-  }
-  /* .form-group {
-    text-align: left;
-  } */
-}

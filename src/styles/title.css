@@ -1,0 +1,10 @@
+
+.title-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.title-image{
+    width: 70%;
+  height: auto;
+}

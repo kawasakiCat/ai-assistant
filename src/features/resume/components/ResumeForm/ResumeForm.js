@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Input from '../../../../components/common/Input/Input';
 import TextArea from "../../../../components/common/TextArea/TextArea";
+import Button from "../../../../components/common/Button/Button";
+import ModalExample from "../../../../ModalExample";
+import '../../../../styles/ResumeForm.css'
 
 export default function ResumeForm() {
     const [formData, setFormData] = useState({
@@ -171,7 +174,9 @@ export default function ResumeForm() {
       };
       
     return ( 
-        <div>
+
+        <div className="resume-form">
+            <ModalExample />
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 2 && <ResumeForm3 data={formData} handleFormGroup={handleFormGroup} addFunction={addEducation} onNext={NextForm} onPrev={PrevForm} />}
@@ -179,6 +184,7 @@ export default function ResumeForm() {
             {currentForm === 4 && <ResumeForm5 data={formData} handleFormGroup={handleFormGroup} addFunction={addCertification} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 5 && <ResumeForm6 data={formData} textCount={textCount} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 6 && <ResumeForm7 data={formData} textCount={textCount} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
+            {currentForm === 7 && <PreviewWindow data={formData} onPrev={PrevForm} />}
         </div>
     );
 }
@@ -204,7 +210,7 @@ function ResumeForm1({ data, handleFormData, onNext }) {
             <div>
                 <Input type='text' label="性別（任意）" name="gender" value={data.gender} onChange={handleFormData} required helperText="例: 女" />
             </div>
-            <button onClick={onNext}>次へ</button>
+            <Button onClick={onNext}>次へ</Button>
         </div>
     );
 }
@@ -221,7 +227,7 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
         return (
             <div className='isCheckContents'>
                 <div>
-                    <label>本人以外の連絡先</label>
+                    <label className="address-text">本人以外の連絡先</label>
                 </div>
                 <div className='form-group'>
                     <Input type='text' label="メールアドレス" name="spareEmail" value={data.spareEmail} onChange={handleFormData} required helperText="例: koa2@sample.com" />
@@ -268,13 +274,13 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
 
             <div>
               <input type='checkbox' checked={isChecked} onChange={handleCheckChange} />
-              <label>現住所以外に連絡を希望する場合</label>
+              <label className="address-text">現住所以外に連絡を希望する場合</label>
 
               {isChecked && <IsCheckContents />}
             </div>
 
-            <button onClick={onNext}>次へ</button>
-            <button onClick={onPrev}>戻る</button>
+            <Button onClick={onNext}>次へ</Button>
+            <Button onClick={onPrev}>戻る</Button>
         </div>
     );
 }
@@ -300,10 +306,10 @@ function ResumeForm3({ data, handleFormGroup, addFunction, onNext, onPrev }) {
                         <Input type='text' label={`学歴${index + 1}  ステータス`} name="status" value={data.education[key].status} onChange={(e) => handleFormGroup('education', key, 'status', e.target.value)} required helperText="例: 入学" />
                     </div>
                 </div>
-            ))};
-            <button onClick={addFunction}>学歴を追加</button>
-            <button onClick={onNext}>次へ</button>
-            <button onClick={onPrev}>戻る</button>
+            ))}
+            <Button onClick={addFunction}>学歴を追加</Button>
+            <Button onClick={onNext}>次へ</Button>
+            <Button onClick={onPrev}>戻る</Button>
         </div>
     );
 };
@@ -330,9 +336,9 @@ function ResumeForm4({ data, handleFormGroup, addFunction, onNext, onPrev }) {
                     </div>
                 </div>
             ))}
-            <button onClick={addFunction}>職歴を追加</button>
-            <button onClick={onNext}>次へ</button>
-            <button onClick={onPrev}>戻る</button>
+            <Button onClick={addFunction}>職歴を追加</Button>
+            <Button onClick={onNext}>次へ</Button>
+            <Button onClick={onPrev}>戻る</Button>
 
         </div>
     );
@@ -357,9 +363,9 @@ function ResumeForm5({ data, handleFormGroup, addFunction, onNext, onPrev }) {
                     </div>
                 </div>
             ))}
-            <button onClick={addFunction}>免許・資格を追加</button>
-            <button onClick={onNext}>次へ</button>
-            <button onClick={onPrev}>戻る</button>
+            <Button onClick={addFunction}>免許・資格を追加</Button>
+            <Button onClick={onNext}>次へ</Button>
+            <Button onClick={onPrev}>戻る</Button>
         </div>
     );
 };
@@ -382,8 +388,8 @@ function ResumeForm6({ data, textCount, handleFormData, onNext, onPrev }) {
                 {/* <p><div style={{ color: remainingSelfPromotion < 10 ? 'yellow' : 'black' }}>{textCount.selfPromotion}</div> / 400</p> */}
             </div>
 
-            <button onClick={onNext}>次へ</button>
-            <button onClick={onPrev}>戻る</button>
+            <Button onClick={onNext}>次へ</Button>
+            <Button onClick={onPrev}>戻る</Button>
         </div>
     );
 };
@@ -399,9 +405,20 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
                 <Input type='text' label="履歴書提出日付" name="submissionDate" value={data.submissionDate} onChange={handleFormData} required helperText="例: " />
             </div>
 
-            <button onClick={onNext}>プレビュー画面へ</button>
-            <button onClick={submit}>送信</button>
-            <button onClick={onPrev}>戻る</button>
+            <Button onClick={onNext}>プレビュー画面へ</Button>
+            <Button onClick={submit}>送信</Button>
+            <Button onClick={onPrev}>戻る</Button>
         </div>
     );
 };
+
+function PreviewWindow({ data, onPrev}) {
+
+    return (
+        <div>
+            <Button variant="secondary">ダウンロード</Button>
+            <Button onChange={onPrev}>フォーム入力へ戻る</Button>
+            <Button>モード選択へ</Button>
+        </div>
+    );
+}
