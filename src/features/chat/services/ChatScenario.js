@@ -1,3 +1,4 @@
+// ChatScenario.js
 export const scenarios = [
 	{
 	  "id": "welcome",

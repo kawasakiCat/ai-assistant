@@ -1,4 +1,6 @@
+// ChatWindow.js
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { scenarios } from '../services/ChatScenario';
 import { MotivationForm, SelfPromotionForm } from './ChatForm';
 import { submitMotivationForm, submitSelfPromotionForm } from '../services/chatService';
@@ -77,6 +79,11 @@ const ChatWindow = () => {
     return null;
   };
 
+  // ユーザーオプションのクリック処理
+  const handleOptionClick = (nextScenarioId) => {
+    setCurrentScenarioId(nextScenarioId);
+  };
+
   return (
     <div className="chat-window">
       {/* メッセージ履歴を表示 */}
@@ -95,12 +102,32 @@ const ChatWindow = () => {
       {currentScenario.type === "form" ? (
         renderForm()
       ) : (
-        currentScenario.options?.map(option => (
-          <Button key={option.next} onClick={() => setCurrentScenarioId(option.next)}>
+        currentScenario.options?.map((option, index) => (
+          <Button
+            key={index}
+            onClick={() => handleOptionClick(option.next)}
+            className="chat-option-button"
+          >
             {option.text}
           </Button>
         ))
       )}
+
+      {/* GoodByeシナリオ */}
+      {currentScenarioId === "goodbye" && (
+          <>
+            <Link to="/" onClick={() => console.log('メニューに戻る')}>
+              <Button className="chat-option-button" variant="primary">
+                モード選択
+              </Button>
+            </Link>
+            <Link to="/resume" onClick={() => console.log('履歴書作成へ移動')}>
+              <Button className="chat-option-button" variant="primary">
+                履歴書作成
+              </Button>
+            </Link>
+          </>
+        )}
     </div>
   );
 };
