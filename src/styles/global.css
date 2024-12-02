@@ -1,0 +1,7 @@
+@import url('./themes.css');
+@import url('./variables.css');
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: var(--bg-main);
+}
