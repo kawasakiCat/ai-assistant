@@ -33,7 +33,7 @@ export function MotivationForm({ onFormSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="card" onSubmit={handleSubmit}>
 			<Input
 				type="text"
 				label="志望業界"

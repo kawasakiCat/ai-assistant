@@ -1,5 +1,6 @@
 import React from 'react';
 import ChatWindow from '../features/chat/components/ChatWindow';
+// import '../styles/chat.css';
 
 const ChatPage = () => {
   return (

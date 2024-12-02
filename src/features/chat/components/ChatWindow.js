@@ -1,65 +1,69 @@
-// ChatWindow.js
 import React, { useState, useEffect, useRef } from 'react';
 import { scenarios } from '../services/ChatScenario';
 import { MotivationForm, SelfPromotionForm } from './ChatForm';
 import { submitMotivationForm, submitSelfPromotionForm } from '../services/chatService';
 import Button from '../../../components/common/Button/Button';
+import '../../../styles/chat.css';
 
 const ChatWindow = () => {
   const [currentScenarioId, setCurrentScenarioId] = useState("welcome");
   const [apiResult, setApiResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [messageHistory, setMessageHistory] = useState([]);
-  const chatHistortRef = useRef(null);
+  const chatHistoryRef = useRef(null);
 
   const currentScenario = scenarios.find(scenario => scenario.id === currentScenarioId);
-  
-  const addMessageToHistory = (message, type = "bot") => {
-    setMessageHistory((prev) => [...prev, {type, message}]);
-  }
 
+  // メッセージを履歴に追加する関数
+  const addMessageToHistory = (message, type = "bot") => {
+    setMessageHistory((prev) => [...prev, { type, message }]);
+  };
+
+  // シナリオ変更時にメッセージを履歴に追加
   useEffect(() => {
     if (currentScenario) {
       addMessageToHistory(currentScenario.message);
     }
   }, [currentScenario]);
 
+  // メッセージ履歴が更新されたら自動スクロール
   useEffect(() => {
-    if (chatHistortRef.current) {
-      chatHistortRef.current.scrollTop = chatHistortRef.current.scrollHeight;
+    if (chatHistoryRef.current) {
+      chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
     }
   }, [messageHistory]);
 
+  // API呼び出し処理
   useEffect(() => {
     const handleApiCall = async () => {
       if (currentScenario.type === "api_call") {
         try {
           let result;
-  
+
           if (currentScenario.api === "generateMotivation") {
             result = await submitMotivationForm(apiResult);
           } else if (currentScenario.api === "generateSelfPromotion") {
             result = await submitSelfPromotionForm(apiResult);
           }
-  
+
           setApiResult(result);
-          addMessageToHistory(result, "bot")
-          setCurrentScenarioId(currentScenario.next);
+          addMessageToHistory(result, "bot"); // API結果を履歴に追加
+          setCurrentScenarioId(currentScenario.next); // 次のシナリオへ
         } catch (error) {
           console.error("APIエラー:", error);
-          setErrorMessage("データ生成に失敗しました。もう一度試してください。")
+          setErrorMessage("データ生成に失敗しました。もう一度試してください。");
         }
       }
     };
-  
+
     handleApiCall();
   }, [currentScenario, apiResult]);
-  
+
   // シナリオに応じてフォームを表示
   const renderForm = () => {
     if (currentScenarioId === "motivation") {
       return <MotivationForm onFormSubmit={(result) => {
-        addMessageToHistory(result, "user");
+        addMessageToHistory(result, "user"); // ユーザー入力を履歴に追加
         setApiResult(result);
         setCurrentScenarioId("motivation_result");
       }} />;
@@ -76,41 +80,21 @@ const ChatWindow = () => {
   return (
     <div className="chat-window">
       {/* メッセージ履歴を表示 */}
-      <div className="chat-history" ref={chatHistortRef}>
+      <div className="chat-history" ref={chatHistoryRef}>
         {messageHistory.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.type}`}>
             {msg.message}
           </div>
         ))}
       </div>
-      <p>{currentScenario.message}</p>
 
       {/* エラーメッセージ */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      {/* APIの結果を表示 */}
-      {apiResult && currentScenarioId === "motivation_result" && (
-        <div>
-          <p>生成された志望動機:</p>
-          <div className="api-result">
-            {apiResult}
-          </div>
-        </div>
-      )}
-      {apiResult && currentScenarioId === "self_promotion_result" && (
-        <div>
-          <p>生成された自己PR:</p>
-          <div className="api-result">
-            {apiResult}
-          </div>
-        </div>
-      )}
-
-      {/* フォームの表示 */}
+      {/* 現在のシナリオに応じたUI */}
       {currentScenario.type === "form" ? (
         renderForm()
       ) : (
-        // 選択肢
         currentScenario.options?.map(option => (
           <Button key={option.next} onClick={() => setCurrentScenarioId(option.next)}>
             {option.text}
