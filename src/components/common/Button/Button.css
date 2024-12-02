@@ -11,6 +11,9 @@
 	position: relative;
 	overflow: hidden;
 	white-space: nowrap;
+  transition:
+        box-shadow 0.3s ease-in-out,
+        transform 0.2s ease-in-out;
 }
 
 /* サイズバリエーション */
@@ -29,20 +32,35 @@
 /* コンテンツのz-indexを上げる */
 .button-content {
 	position: relative;
-	z-index: 1;
+	z-index: 2;
+}
+
+.button-primary,
+.button-secondary,
+.button-danger,
+.button-success {
+    background: var(--bg-light);
+    color: var(--text-primary);
+    box-shadow: 
+        6px 6px 12px var(--shadow-dark),
+        -6px -6px 12px var(--shadow-light);
 }
 
 /* バリアントスタイル */
 .button-primary {
   background: linear-gradient(145deg, var(--primary-light), var(--primary));
   color: white;
-  box-shadow: 0 4px 15px rgba(0, 121, 255, 0.2);
+  /*box-shadow: 0 4px 15px rgba(0, 121, 255, 0.2);*/
 }
 
 .button-primary:hover {
+  transform: scale(1.05);
   background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-  box-shadow: 0 6px 20px rgba(0, 121, 255, 0.3);
-  transform: translateY(-1px);
+  box-shadow: 
+        8px 8px 16px var(--shadow-dark),
+        -8px -8px 16px var(--shadow-light);
+  /*box-shadow: 0 6px 20px rgba(0, 121, 255, 0.3);*/
+  /*transform: translateY(-1px);*/
 }
 
 .button-secondary {

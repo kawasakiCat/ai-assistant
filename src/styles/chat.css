@@ -20,18 +20,19 @@
   }
   
   .chat-message.bot {
-	background: var(--primary-gradient);
+	background: var(--secondary-gradient);
 	align-self: flex-start;
+  color: var(--text-primary);
   }
   
   .chat-message.user {
 	max-width: 80%;
-	background: var(--secondary-gradient);
+	background: var(--success-gradient);
 	align-self: flex-end;
   }
   
   .error-message {
-	color: red;
+	color: var(--danger);
 	padding: 10px;
   }
   

@@ -64,7 +64,7 @@
 }
 
 .menu-panel {
-	background: linear-gradient(145deg, rgba(240, 245, 255, 0.9), rgba(225, 233, 255, 0.9));
+	background: var(--bg-gradient);
 	border-radius: 12px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	padding: 16px;

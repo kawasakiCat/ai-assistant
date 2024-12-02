@@ -19,44 +19,57 @@
 
 .textarea-field {
     padding: 0.625rem;
-    border: 1px solid var(--bg-dark);
-    border-radius: 0.375rem;
     font-size: 1rem;
     line-height: 1.5;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     width: 100%;
-    resize: vertical; /* Allow vertical resizing */
-    min-height: 4rem; /* Ensure minimum height */
+    resize: vertical;
+    min-height: 4rem;
+
+    /* ニューモーフィズムスタイル */
+    background: var(--bg-light);
+    border-radius: 12px;
+    border: none;
+    
+    box-shadow: 
+        6px 6px 12px var(--shadow-dark),     /* メインの影 */
+        -6px -6px 12px var(--shadow-light),  /* 反対側の影 */
+        inset 0 0 0 transparent;             /* フォーカス時の内側シャドウ用のプレースホルダー */
+    
+    transition: 
+        box-shadow 0.3s ease-in-out,
+        transform 0.2s ease-in-out;
 }
 
 .textarea-field:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    transform: scale(1.01); /* わずかに拡大して立体感を演出 */
+    box-shadow: 
+        3px 3px 6px var(--shadow-dark),     /* フォーカス時は影を小さく */
+        -3px -3px 6px var(--shadow-light),
+        inset 4px 4px 8px var(--shadow-dark),   /* 内側の影を追加 */
+        inset -4px -4px 8px var(--shadow-light);
 }
 
 .textarea-field:disabled {
-    background-color: var(--text-disabled);
+    background: var(--bg-disabled);
+    box-shadow: 
+        3px 3px 6px var(--shadow-dark),
+        -3px -3px 6px var(--shadow-light);
     cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.textarea-field.textarea-error {
-    border-color: var(--danger);
-}
-
-.textarea-field.textarea-error:focus {
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    opacity: 0.5;
+    color: var(--text-secondary);
 }
 
 .helper-text {
     font-size: 0.75rem;
-    color: var(--text-secondary); /* Changed from disabled for better readability */
+    color: var(--text-secondary);
     margin-top: 0.25rem;
+    padding-left: 0.5rem;
 }
 
 .error-message {
     font-size: 0.75rem;
     color: var(--danger);
     margin-top: 0.25rem;
+    padding-left: 0.5rem;
 }
