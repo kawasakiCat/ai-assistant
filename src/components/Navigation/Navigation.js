@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../Button/Button';
+import Button from '../common/Button/Button';
 import './Navigation.css';
 
 const Navigation = () => {
