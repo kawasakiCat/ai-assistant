@@ -5,11 +5,33 @@ import Button from "../../../components/common/Button/Button";
 
 const Settings = () => {
 	// 選択中のラジオボタン
-	const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+	const [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
 	
+	const getSystemTheme = () => {
+		return window.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
+	};
+
 	useEffect(() => {
-		document.documentElement.setAttribute('data-theme', theme);
+		const currentTheme = theme === "system" ? getSystemTheme() : theme;
+		document.documentElement.setAttribute('data-theme', currentTheme);
 		localStorage.setItem('theme', theme);
+	}, [theme]);
+
+	useEffect(() => {
+		if (theme === "system") {
+			const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+			const handleChange = () => {
+        const newSystemTheme = mediaQuery.matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", newSystemTheme);
+      };
+			mediaQuery.addEventListener("change", handleChange);
+
+      return () => {
+        mediaQuery.removeEventListener("change", handleChange);
+      };
+		}
 	}, [theme]);
 
 	const handleThemeChange = (e) => {
@@ -32,15 +54,15 @@ const Settings = () => {
 		}
 	];
 
-	// モーダルウィンドウ開閉
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	// モーダルの状態管理
+	const [activeModal, setactiveModal] = useState(null);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openModal = (modalType) => {
+    setactiveModal(modalType);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setactiveModal(null);
   };
 
 	return (
@@ -60,7 +82,6 @@ const Settings = () => {
 						)
 					})}
 				</div>
-				<div>{theme}が選択中</div>
 			</div>
 			<div className="settings-data">
 				<div>データの管理</div>
@@ -69,6 +90,7 @@ const Settings = () => {
 					<Button
 						variant="danger"
 						size="small"
+						onClick={() => openModal("deleteResume")}
 					>
 						削除
 					</Button>
@@ -78,6 +100,7 @@ const Settings = () => {
 					<Button
 						variant="danger"
 						size="small"
+						onClick={() => openModal("deleteChat")}
 					>
 						削除
 					</Button>
@@ -88,27 +111,53 @@ const Settings = () => {
 				<div>最終更新日:yyyy-MM-DD</div>
 				<Button
 					className="open-modal-button"
-					onClick={openModal}
+					onClick={() => openModal("terms")}
 					variant="primary"
 					size="small"
 				>
 					閲覧
 				</Button>
 				<Modal
-					isOpen={isModalOpen}
+					isOpen={!!activeModal}
 					onClose={closeModal}
-					title="利用規約"
+					title={
+						activeModal === "terms"
+							? "利用規約"
+							: "削除確認"
+					}
 					size="medium"
 				>
-					<div className="modal-content-term">
-						<p>利用規約の内容</p>
-						<Button
-							className="close-modal-button"
-							onClick={closeModal}
-						>
-							閉じる
-						</Button>
-					</div>
+					{activeModal === "terms" && (
+						<div className="modal-content-term">
+							<p>利用規約の内容</p>
+							<Button
+								className="close-modal-button"
+								onClick={closeModal}
+								size="small"
+							>
+								閉じる
+							</Button>
+						</div>
+					)}
+					{(activeModal === "deleteResume" || activeModal === "deleteChat") && (
+						<div className="modal-content-confirm">
+							<p>{activeModal === "deleteResume" ? "履歴書データ" : "チャットデータ"}を本当に削除しますか？</p>
+							<Button
+								variant="danger"
+								onClick={() => {
+									console.log(activeModal === "deleteResume" ? "履歴書削除" : "チャット削除");
+									closeModal();
+								}}>
+									削除する
+							</Button>
+							<Button
+								variant="secondary"
+								onClick={closeModal}
+							>
+								キャンセル
+							</Button>
+						</div>
+					)}
 				</Modal>
 			</div>
 		</div>
