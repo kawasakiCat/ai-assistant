@@ -8,6 +8,7 @@ import MemoPage from './pages/MemoPage';
 import SettingsPage from './pages/SettingsPage';
 import LoginPage from './pages/LoginPage';
 import TitlePage from './pages/TitlePage';
+import './styles/global.css';
 
 const App = () => {
   return (

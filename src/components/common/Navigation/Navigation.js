@@ -65,6 +65,20 @@ const Navigation = () => {
             </Button>
           </Link>
         </div>
+        <div className="menu-item">
+          <Link to="/" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              モード選択
+            </Button>
+          </Link>
+        </div>
+        <div className="menu-item">
+          <Link to="/title" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              タイトル
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 /* Button.css */
-@import url(/src/styles/color_scheme.css);
 .button {
 	display: inline-flex;
 	align-items: center;
