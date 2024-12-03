@@ -407,7 +407,7 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
             </div>
 
             <Button onClick={onNext}>プレビュー画面へ</Button>
-            <Button onClick={submit} disabled>送信</Button>
+            <Button onClick={submit}>送信</Button>
             <Button onClick={onPrev}>戻る</Button>
         </div>
     );
