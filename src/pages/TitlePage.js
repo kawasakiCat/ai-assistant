@@ -68,7 +68,7 @@ const TitlePage = () => {
 				<Link to="/login" className=''>
 					<Button disabled={!isCheckTerm} className="title-button">ログイン</Button>
 				</Link>
-				<Link to="/login">
+				<Link to="/signup">
 					<Button disabled={!isCheckTerm} className="title-button">新規登録</Button>
 				</Link>				
 				<Link to="/">
