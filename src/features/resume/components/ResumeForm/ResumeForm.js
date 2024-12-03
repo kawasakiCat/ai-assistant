@@ -4,6 +4,7 @@ import TextArea from "../../../../components/common/TextArea/TextArea";
 import Button from "../../../../components/common/Button/Button";
 import ModalExample from "../../../../ModalExample";
 import '../../../../styles/ResumeForm.css'
+import { Link } from "react-router-dom";
 
 export default function ResumeForm() {
     const [formData, setFormData] = useState({
@@ -406,7 +407,7 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
             </div>
 
             <Button onClick={onNext}>プレビュー画面へ</Button>
-            <Button onClick={submit}>送信</Button>
+            <Button onClick={submit} disabled>送信</Button>
             <Button onClick={onPrev}>戻る</Button>
         </div>
     );
@@ -417,8 +418,10 @@ function PreviewWindow({ data, onPrev}) {
     return (
         <div>
             <Button variant="secondary">ダウンロード</Button>
-            <Button onChange={onPrev}>フォーム入力へ戻る</Button>
-            <Button>モード選択へ</Button>
+            <Button onClick={onPrev}>フォーム入力へ戻る</Button>
+            <Link to="/">
+                <Button>モード選択へ</Button>
+            </Link>
         </div>
     );
 }
