@@ -1,5 +1,4 @@
 /* Input.css */
-@import url(/src/styles/color_scheme.css);
 .input-wrapper {
 	display: flex;
 	flex-direction: column;

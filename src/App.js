@@ -1,6 +1,6 @@
 import React from 'react';
+import { useTheme } from './hooks/useTheme';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navigation from './components/common/Navigation/Navigation';
 import HomePage from './pages/HomePage';
 import ResumePage from './pages/ResumePage';
 import ChatPage from './pages/ChatPage';
@@ -8,11 +8,13 @@ import MemoPage from './pages/MemoPage';
 import SettingsPage from './pages/SettingsPage';
 import LoginPage from './pages/LoginPage';
 import TitlePage from './pages/TitlePage';
+import './styles/global.css';
 
 const App = () => {
+  useTheme();
+
   return (
     <Router>
-      <Navigation />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resume" element={<ResumePage />} />

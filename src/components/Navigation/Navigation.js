@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../Button/Button';
+import Button from '../common/Button/Button';
 import './Navigation.css';
 
 const Navigation = () => {
@@ -62,6 +62,20 @@ const Navigation = () => {
               ログ
               <br />
               イン
+            </Button>
+          </Link>
+        </div>
+        <div className="menu-item">
+          <Link to="/" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              モード選択
+            </Button>
+          </Link>
+        </div>
+        <div className="menu-item">
+          <Link to="/title" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              タイトル
             </Button>
           </Link>
         </div>

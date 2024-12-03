@@ -1,3 +1,4 @@
+// ChatScenario.js
 export const scenarios = [
 	{
 	  "id": "welcome",
@@ -21,7 +22,7 @@ export const scenarios = [
 	  "id": "motivation",
 	  "message": "志望動機の作成に必要な情報を教えてください！簡単なキーワードでもOKです！",
 	  "type": "form",
-	  "next": "motivation_result"
+	  "next": "motivation_generate"
 	},
 	{
 		"id": "motivation_generate",
@@ -42,10 +43,10 @@ export const scenarios = [
 		"id": "self_promotion",
 		"message": "自己PRに作成に必要な情報を教えてください！簡単なキーワードでもOKです！",
 		"type": "form",
-		"next": "selfPromotionResult"
+		"next": "self_promotion_generate"
 	},
 	{
-		"id": "motivation_generate",
+		"id": "self_promotion_generate",
 		"message": "入力内容をもとに自己PRを生成しています...",
 		"type": "api_call",
 		"api": "generateSelfPromotion",
