@@ -57,3 +57,21 @@
 	color: var(--danger);
 	margin-top: 0.25rem;
   }
+
+  .password-input-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+  }
+  
+  .password-input-wrapper .input-field {
+	flex: 1; /* フレックスで幅を自動調整 */
+  }
+  
+  .password-toggle-icon {
+	position: absolute;
+	right: 10px;
+	cursor: pointer;
+	color: var(--text-disabled); /* 必要なら色を調整 */
+  }
+  
