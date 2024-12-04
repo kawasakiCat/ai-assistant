@@ -149,21 +149,21 @@ export default function ResumeForm() {
         setCurrentForm(currentForm - 1);
     };
     
-    // const processedData = Object.fromEntries(
-    //     Object.entries(formData).map(([key, value]) => [key, value.trim() === "" ? null : value])
-    // );
-    // console.log(processedData);
-
+    
     const handleSubmit = async () => {
         try {
+            const processedData = Object.fromEntries(
+                Object.entries(formData).map(([key, value]) => [key, value === "" ? null : value])
+            );
             console.log(formData);
+            console.log(processedData);
 
             const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/resume', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(processedData),
             });
 
             const result = await response.json();
