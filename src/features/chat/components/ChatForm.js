@@ -10,12 +10,12 @@ import Input from "../../../components/common/Input/Input";
 
 export function MotivationForm({ onFormSubmit }) {
   const [formData, updateFormData] = useChatFormData({
-    targetIndustry: "",
-    targetCompany: "",
-    personalBackground: "",
-    careerGoals: "",
-    companyUnderstanting: "",
-    matchingElements: "",
+    targetIndustry: null,
+    targetCompany: null,
+    personalBackground: null,
+    careerGoals: null,
+    companyUnderstanting: null,
+    matchingElements: null,
   });
 
   const handleInputChange = (e) => {
@@ -97,11 +97,11 @@ export function MotivationForm({ onFormSubmit }) {
 
 export function SelfPromotionForm({ onFormSubmit }) {
   const [formData, updateFormData] = useChatFormData({
-    strengths: "",
-    studentExperience: "",
-    achievements: "",
-    personality: "",
-    futureGoals: "",
+    strengths: null,
+    studentExperience: null,
+    achievements: null,
+    personality: null,
+    futureGoals: null,
   });
 
   const handleInputChange = (e) => {
