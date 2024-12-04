@@ -424,7 +424,7 @@ function PreviewWindow({ onPrev}) {
 
     return (
         <div>
-            <Button variant="secondary" onClick={DynamicFileDownload}>ダウンロード</Button>
+            <DynamicFileDownload />
             <Button onClick={onPrev}>フォーム入力へ戻る</Button>
             <Link to="/">
                 <Button>モード選択へ</Button>
