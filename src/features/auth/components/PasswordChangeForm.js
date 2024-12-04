@@ -114,6 +114,7 @@ const PasswordChangeForm = () => {
 			<Button
 				className="password-change-button"
 				onClick={handlePasswordSubmit}
+				size="small"
 			>
 				送信
 			</Button>
