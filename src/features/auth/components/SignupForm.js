@@ -11,8 +11,10 @@ export default function SignupForm(){
     const [ signupData, setSignupData ] = useState({
         email : "",
         password : "",
+        confirmPassword: "",
     });
     const [ isVisible, setIsVisible ] = useState(false);
+    const [ isConfirmVisible, setIsConfirmVisible ] = useState(false);
 
     const handleSignupData = (e) => {
         setSignupData({ ...signupData, [e.target.name]: e.target.value });
@@ -20,6 +22,10 @@ export default function SignupForm(){
 
     const handleVisible = (prev) => {
         setIsVisible( (prev) => !prev )
+    };
+
+    const handleConfirmVisible = (prev) => {
+        setIsConfirmVisible( (prev) => !prev )
     };
 
     return (
@@ -32,8 +38,8 @@ export default function SignupForm(){
                 <div onClick={handleVisible} className="eye-icon"><FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash } /></div>
             </div>
             <div className="pw-group">
-                <Input type='text' label="パスワード（確認）" name="password" required helperText="" />
-                <div onClick={handleVisible} className="eye-icon"><FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash } /></div>
+                <Input type={isConfirmVisible ? "text" : "password" } label="パスワード（確認）" name="confirmPassword" value={signupData.confirmPassword} onChange={handleSignupData} required helperText="" />
+                <div onClick={handleConfirmVisible} className="eye-icon"><FontAwesomeIcon icon={isConfirmVisible ? faEye : faEyeSlash } /></div>
             </div>
             <Button>新規登録</Button>
             <Link to="/login">アカウントをお持ちの方</Link>

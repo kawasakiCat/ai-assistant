@@ -158,17 +158,18 @@ export default function ResumeForm() {
             console.log(formData);
             console.log(processedData);
 
-            const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/resume', {
+            const response = await fetch('https://ai-assistant@ai-assistant.core-akita.ac.jp/api/resume', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json;charset=UFT-8',
             },
             body: JSON.stringify(processedData),
             });
 
-            const result = await response.json();
+            // const result = await response.json();
             
-            console.log(result);
+            console.log(response);
+            // console.log(result);
 
             if (response.ok) {
                 console.log('フォームが送信されました！');

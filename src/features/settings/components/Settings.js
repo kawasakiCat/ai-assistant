@@ -1,38 +1,17 @@
-import React, { useState, useEffect } from "react";
+// Settings.js
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useTheme } from "../../../hooks/useTheme";
+import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../../components/common/Modal/Modal"
 import Button from "../../../components/common/Button/Button";
-// import Input from "../../../components/common/Input/Input";
 
 const Settings = () => {
-	// 選択中のラジオボタン
-	const [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
-	
-	const getSystemTheme = () => {
-		return window.matchMedia("(prefers-color-scheme: dark)").matches
-			? "dark"
-			: "light";
-	};
+	// ログイン状態のチェック
+	const { isLoggedIn, user, loading } = useAuth();
 
-	useEffect(() => {
-		const currentTheme = theme === "system" ? getSystemTheme() : theme;
-		document.documentElement.setAttribute('data-theme', currentTheme);
-		localStorage.setItem('theme', theme);
-	}, [theme]);
-
-	useEffect(() => {
-		if (theme === "system") {
-			const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-			const handleChange = () => {
-        const newSystemTheme = mediaQuery.matches ? "dark" : "light";
-        document.documentElement.setAttribute("data-theme", newSystemTheme);
-      };
-			mediaQuery.addEventListener("change", handleChange);
-
-      return () => {
-        mediaQuery.removeEventListener("change", handleChange);
-      };
-		}
-	}, [theme]);
+	// テーマ設定
+	const { theme, setTheme } = useTheme();
 
 	const handleThemeChange = (e) => {
 		setTheme(e.target.value);
@@ -67,12 +46,51 @@ const Settings = () => {
 
 	return (
 		<div className="settings">
+			{loading && (
+				<div>認証状態を確認中...</div>
+			)}
+			{!isLoggedIn && (
+				<Link to="/login">
+					<Button
+						variant="secondary"
+						size="small"
+					>
+						ログイン
+					</Button>
+				</Link>
+			)}
+			{isLoggedIn && (
+				<div className="settings-account">
+					<div>アカウント管理</div>
+					<div className="account-email">登録メールアドレス: {user.email}</div>
+					<Button
+						className="change-password"
+						size="small"
+					>
+						パスワード変更
+					</Button>
+					<Button
+						variant="secondary"
+						size="small"
+						onClick={() => openModal("logout")}
+					>
+						ログアウト
+					</Button>
+					<Button
+						variant="danger"
+						size="small"
+						onClick={() => openModal("deleteAccount")}
+					>
+						アカウント削除
+					</Button>
+				</div>
+			)}
 			<div className="settings-interface">
 				<div>インターフェース</div>
 				<div className="radio">
 					{radioButtons.map(radio => {
 						return (
-							<div>
+							<div key={radio.value}>
 								<input className="form-check-input" type="radio" name="interface"
 									value={radio.value} checked={radio.value === theme} onChange={handleThemeChange} />
 								<label className="form-check-label">
@@ -139,13 +157,40 @@ const Settings = () => {
 							</Button>
 						</div>
 					)}
-					{(activeModal === "deleteResume" || activeModal === "deleteChat") && (
+					{activeModal === "logout" && (
 						<div className="modal-content-confirm">
-							<p>{activeModal === "deleteResume" ? "履歴書データ" : "チャットデータ"}を本当に削除しますか？</p>
+							<p>本当にログアウトしますか？</p>
 							<Button
 								variant="danger"
 								onClick={() => {
-									console.log(activeModal === "deleteResume" ? "履歴書削除" : "チャット削除");
+									console.log("ログアウトボタンを押した");
+									closeModal();
+								}}>
+									ログアウトする
+							</Button>
+							<Button
+								variant="secondary"
+								onClick={closeModal}
+							>
+								キャンセル
+							</Button>
+						</div>
+					)}
+					{(activeModal === "deleteResume" || activeModal === "deleteChat") && (
+						<div className="modal-content-confirm">
+							<p>
+								{activeModal === "deleteResume"
+										? "履歴書データ" : "deleteChat"
+										}を本当に削除しますか？　この操作は元に戻せません。
+							</p>
+							<Button
+								variant="danger"
+								onClick={() => {
+									console.log(
+										activeModal === "deleteResume"
+											? "履歴書削除"
+											: "チャット削除"
+										);
 									closeModal();
 								}}>
 									削除する
@@ -157,6 +202,25 @@ const Settings = () => {
 								キャンセル
 							</Button>
 						</div>
+					)}
+					{activeModal === "deleteAccount" && (
+						<div className="modal-content-confirm">
+							<p>本当にアカウントを削除しますか？　この操作は元に戻せません。</p>
+						<Button
+							variant="danger"
+							onClick={() => {
+								console.log("アカウント削除");
+								closeModal();
+							}}>
+								削除する
+						</Button>
+						<Button
+							variant="secondary"
+							onClick={closeModal}
+						>
+							キャンセル
+						</Button>
+					</div>
 					)}
 				</Modal>
 			</div>

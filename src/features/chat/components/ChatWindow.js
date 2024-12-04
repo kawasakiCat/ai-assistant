@@ -7,6 +7,18 @@ import { submitMotivationForm, submitSelfPromotionForm } from '../services/chatS
 import Button from '../../../components/common/Button/Button';
 import '../../../styles/chat.css';
 
+// function CopyToClipboard() {
+//   const [resultText, setResultText] = useState();
+//   const copyToClipboard = async () => {
+//     try {
+//       await global.navigator.clipboard.writeText(resultText);
+//       setResultText('コピーしました');
+//     } catch (err) {
+//       setResultText('コピーに失敗しました');
+//     }
+//   }
+// }
+
 const ChatWindow = () => {
   const [currentScenarioId, setCurrentScenarioId] = useState("welcome");
   const [apiResult, setApiResult] = useState(null);
@@ -91,6 +103,13 @@ const ChatWindow = () => {
         {messageHistory.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.type}`}>
             {msg.message}
+            {/* <Button
+              variant="secondary"
+              onClick={CopyToClipboard}
+              size="small"
+            >
+              コピー
+            </Button> */}
           </div>
         ))}
       </div>

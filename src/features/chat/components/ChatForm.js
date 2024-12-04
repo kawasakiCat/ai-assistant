@@ -23,13 +23,13 @@ export function MotivationForm({ onFormSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    // try {
+    try {
       const result = await submitMotivationForm(formData);
       console.log("APIの結果:", result);
       onFormSubmit(result);
-    // } catch (error) {
-      // console.error("送信中にエラー", error);
-    // }
+    } catch (error) {
+      console.error("送信中にエラー", error);
+    }
   };
 
   return (
@@ -93,17 +93,28 @@ export function MotivationForm({ onFormSubmit }) {
 };
 
 export function SelfPromotionForm({ onFormSubmit }) {
-  const [formData, updateFormData] = useChatFormData({ strengths: "", studentExperience: "", achievements:"", personality:"", futureGoals:"" });
+  const [formData, updateFormData] = useChatFormData({
+    strengths: "",
+    studentExperience: "",
+    achievements:"",
+    personality:"",
+    futureGoals:""
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     updateFormData(name, value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    onFormSubmit();
+    try {
+      const result = await submitSelfPromotionForm(formData);
+      console.log("APIの結果:", result);
+      onFormSubmit(result);
+    } catch (error) {
+      console.error("送信中にエラー", error);
+    }
   };
 
   return (
