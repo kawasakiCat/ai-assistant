@@ -8,6 +8,8 @@ import {
   submitSelfPromotionForm,
 } from "../services/chatService";
 import Button from "../../../components/common/Button/Button";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import "../../../styles/chat.css";
 
 // function CopyToClipboard() {
@@ -116,13 +118,11 @@ const ChatWindow = () => {
         {messageHistory.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.type}`}>
             {msg.message}
-            {/* <Button
-              variant="secondary"
+            {/*<span
               onClick={CopyToClipboard}
-              size="small"
             >
-              コピー
-            </Button> */}
+              <FontAwesomeIcon icon={faClipboard} />
+            </span>*/}
           </div>
         ))}
       </div>

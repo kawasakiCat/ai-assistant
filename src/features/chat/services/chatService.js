@@ -6,7 +6,7 @@ export async function submitMotivationForm(data) {
     const response = await fetch(`${API_BASE_URL}/motivation`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
       },
       body: JSON.stringify(data),
     });
