@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { validatePassword } from "../services/validation";
 import { changePassword } from "../services/authService";
+import { useAuth } from "../../../hooks/useAuth";
 import Input from "../../../components/common/Input/Input";
 import Button from "../../../components/common/Button/Button";
 import Modal from "../../../components/common/Modal/Modal";
@@ -9,6 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const PasswordChangeForm = () => {
+	// ログイン状態のチェック
+	const { isLoggedIn, loading } = useAuth();
+
 	// パスワード表示トグル状態管理
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
@@ -68,15 +72,20 @@ const PasswordChangeForm = () => {
 
 	return (
 		<div className="password-change-form">
-			<div className="password-input-wrapper">
-				<Input
-					type="password"
-					label="現在のパスワード"
-					name="currentPassword"
-					onChange={(e) => setCurremtPassword(e.target.value)}
-					required
-				/>
-			</div>
+			{loading && (
+				<div>認証状態を確認中...</div>
+			)}
+			{isLoggedIn && (
+				<div className="password-input-wrapper">
+					<Input
+						type="password"
+						label="現在のパスワード"
+						name="currentPassword"
+						onChange={(e) => setCurremtPassword(e.target.value)}
+						required
+					/>
+				</div>
+			)}
 			<div className="password-input-wrapper">
 				<Input
 					type={isPasswordVisible ? "text" : "password"}

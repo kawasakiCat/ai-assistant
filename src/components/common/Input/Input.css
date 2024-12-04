@@ -61,7 +61,6 @@
   .password-input-wrapper {
 	position: relative;
 	display: flex;
-	grid-template-columns: 1fr auto;
 	align-items: center;
 	justify-content: start;
   }
@@ -71,7 +70,9 @@
   }
   
   .password-toggle-icon {
+	/* position: absolute;
+    margin: 45px 0 0 200px; */
 	cursor: pointer;
-	color: var(--text-disabled); /* 必要なら色を調整 */
+	color: var(--text-disabled);
   }
   
