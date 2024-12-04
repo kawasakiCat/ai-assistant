@@ -7,6 +7,7 @@ import ChatPage from './pages/ChatPage';
 import MemoPage from './pages/MemoPage';
 import SettingsPage from './pages/SettingsPage';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import TitlePage from './pages/TitlePage';
 import './styles/global.css';
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/memo" element={<MemoPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="/title" element={<TitlePage />} />
       </Routes>
     </Router>

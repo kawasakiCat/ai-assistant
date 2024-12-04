@@ -20,12 +20,12 @@ export default function ResumeForm() {
         address1: '',
         address2: '',
         addressKana: '',
-        spareEmail: '',
-        spareTelNo: '',
-        sparePostalCode: '',
-        spareAddress1: '',
-        spareAddress2: '',
-        spareAddressKana: '',
+        emailAlt: '',
+        telNoAlt: '',
+        postalCodeAlt: '',
+        address1Alt: '',
+        address2Alt: '',
+        addressKanaAlt: '',
         education: {
             education1: {
                 year: '',
@@ -54,14 +54,14 @@ export default function ResumeForm() {
         },
         motivation: '',
         selfPromotion: '',
-        freeSpace: '',
-        submissionDate: '',
+        desiredColumn: '',
+        date: '',
 
     });
     const [textCount, setTextCount] = useState({
         motivation: 0,
         selfPromotion: 0,
-        freeSpace: 0,
+        desiredColumn: 0,
     });
     const [currentForm, setCurrentForm] = useState(0);
   
@@ -72,7 +72,7 @@ export default function ResumeForm() {
                 setFormData({ ...formData, [e.target.name]: e.target.value});
                 setTextCount({ ...textCount, [e.target.name]: e.target.value.length});
             }
-        }else if( e.target.name === 'freeSpace' ){
+        }else if( e.target.name === 'desiredColumn' ){
             if( e.target.value.length <= 150 ){
                 setFormData({ ...formData, [e.target.name]: e.target.value});
                 setTextCount({ ...textCount, [e.target.name]: e.target.value.length});
@@ -148,11 +148,17 @@ export default function ResumeForm() {
     const PrevForm = () => {
         setCurrentForm(currentForm - 1);
     };
- 
+    
+    // const processedData = Object.fromEntries(
+    //     Object.entries(formData).map(([key, value]) => [key, value.trim() === "" ? null : value])
+    // );
+    // console.log(processedData);
+
     const handleSubmit = async () => {
         try {
             console.log(formData);
-            const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/api-test-resume.php', {
+
+            const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/resume', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -223,34 +229,6 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
     const handleCheckChange = ( e ) => {
       setChecked(e.target.checked);
     };
-
-    const IsCheckContents = () => {
-        return (
-            <div className='isCheckContents'>
-                <div>
-                    <label className="address-text">本人以外の連絡先</label>
-                </div>
-                <div className='form-group'>
-                    <Input type='text' label="メールアドレス" name="spareEmail" value={data.spareEmail} onChange={handleFormData} required helperText="例: koa2@sample.com" />
-                </div>
-                <div>
-                    <Input type='text' label="電話番号" name="spareTelNo" value={data.spareTelNo} onChange={handleFormData} required helperText="例: 08011112222" />
-                </div>
-                <div>
-                    <Input type='text' label="郵便番号" name="sparePostalCode" value={data.sparePostalCode} onChange={handleFormData} required helperText="例: 0100001" />
-                </div>
-                <div>
-                    <Input type='text' label="住所" name="spareAddress1" value={data.spareAddress1} onChange={handleFormData} required helperText="例: " />
-                </div>
-                <div>
-                    <Input type='text' label="住所（番地・建物名）" name="spareAddress2" value={data.spareAddress2} onChange={handleFormData} required helperText="例: " />
-                </div>
-                <div>
-                    <Input type='text' label="住所（かな）" name="spareAddressKana" value={data.spareAddressKana} onChange={handleFormData} required helperText="例: " />
-                </div>
-            </div>
-        );
-    }
   
     return (
         <div>
@@ -277,11 +255,39 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
               <input type='checkbox' checked={isChecked} onChange={handleCheckChange} />
               <label className="address-text">現住所以外に連絡を希望する場合</label>
 
-              {isChecked && <IsCheckContents />}
+              {isChecked && <IsCheckContents data={data} handleFormData={handleFormData} />}
             </div>
 
             <Button onClick={onNext}>次へ</Button>
             <Button onClick={onPrev}>戻る</Button>
+        </div>
+    );
+}
+
+function IsCheckContents({ data, handleFormData }) {
+    return (
+        <div className='isCheckContents'>
+            <div>
+                <label className="address-text">本人以外の連絡先</label>
+            </div>
+            <div className='form-group'>
+                <Input type='text' label="メールアドレス" name="emailAlt" value={data.emailAlt} onChange={handleFormData} required helperText="例: koa2@sample.com" />
+            </div>
+            <div>
+                <Input type='text' label="電話番号" name="telNoAlt" value={data.telNoAlt} onChange={handleFormData} required helperText="例: 08011112222" />
+            </div>
+            <div>
+                <Input type='text' label="郵便番号" name="postalCodeAlt" value={data.postalCodeAlt} onChange={handleFormData} required helperText="例: 0100001" />
+            </div>
+            <div>
+                <Input type='text' label="住所" name="address1Alt" value={data.address1Alt} onChange={handleFormData} required helperText="例: " />
+            </div>
+            <div>
+                <Input type='text' label="住所（番地・建物名）" name="address2Alt" value={data.address2Alt} onChange={handleFormData} required helperText="例: " />
+            </div>
+            <div>
+                <Input type='text' label="住所（かな）" name="addressKanaAlt" value={data.addressKanaAlt} onChange={handleFormData} required helperText="例: " />
+            </div>
         </div>
     );
 }
@@ -399,21 +405,21 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
     return (
         <div>
             <div className='form-group'>
-                <TextArea type='text' label="本人希望欄" name="freeSpace" value={data.freeSpace} onChange={handleFormData} required helperText="例: 貴社の規定に従います。" />
-                <div>{textCount.freeSpace} / 150</div>
+                <TextArea type='text' label="本人希望欄" name="desiredColumn" value={data.desiredColumn} onChange={handleFormData} required helperText="例: 貴社の規定に従います。" />
+                <div>{textCount.desiredColumn} / 150</div>
             </div>
             <div>
-                <Input type='text' label="履歴書提出日付" name="submissionDate" value={data.submissionDate} onChange={handleFormData} required helperText="例: " />
+                <Input type='text' label="履歴書提出日付" name="date" value={data.date} onChange={handleFormData} required helperText="例: " />
             </div>
 
             <Button onClick={onNext}>プレビュー画面へ</Button>
-            <Button onClick={submit} disabled>送信</Button>
+            <Button onClick={submit}>送信</Button>
             <Button onClick={onPrev}>戻る</Button>
         </div>
     );
 };
 
-function PreviewWindow({ data, onPrev}) {
+function PreviewWindow({ onPrev}) {
 
     return (
         <div>
