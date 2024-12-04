@@ -1,6 +1,8 @@
 // useAuth.js
 // 認証情報を取得してくるフック
+
 import { useState, useEffect } from "react";
+import fakeAuthAPI from "../services/fakeAuthAPI";
 
 export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // ログイン状態
@@ -10,7 +12,7 @@ export const useAuth = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const userData = await fakeAuthAPI(); // 認証状態をチェックする（ここはAPIやライブラリと連携）
+        const userData = await fakeAuthAPI(true); // 認証状態をチェックする（ここはAPIやライブラリと連携）
         setIsLoggedIn(!!userData); // userDataがある＝ログイン済み
         setUser(userData);         // ユーザーデータをセット
       } catch (err) {
@@ -25,12 +27,4 @@ export const useAuth = () => {
   }, []);
 
   return { isLoggedIn, user, loading };
-};
-
-// ダミーAPI関数
-const fakeAuthAPI = async () => {
-	// 仮の認証API。1秒後にログイン済みのユーザー情報を返す。
-	return new Promise((resolve) => {
-		setTimeout(() => resolve({ id: 1, email: "user@example.com", name: "テストユーザー" }), 1000);
-	});
 };

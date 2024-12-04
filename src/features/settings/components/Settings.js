@@ -5,17 +5,25 @@ import { useTheme } from "../../../hooks/useTheme";
 import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../../components/common/Modal/Modal";
 import Button from "../../../components/common/Button/Button";
+import PasswordChangeForm from "../../auth/components/PasswordChangeForm";
 
 const Settings = () => {
-  // ログイン状態のチェック
-  const { isLoggedIn, user, loading } = useAuth();
-
-  // テーマ設定
+  const { isLoggedIn, user, loading } = useAuth(); // ログイン状態のチェック
   const { theme, setTheme } = useTheme();
+  const [currentView, setCurrentView] = useState("settings");
+  const [activeModal, setactiveModal] = useState(null);
 
   const handleThemeChange = (e) => {
     setTheme(e.target.value);
   };
+
+  if (currentView === "passwordChange") {
+    return (
+      <PasswordChangeForm
+        onCancel={() => setCurrentView("settings")} // 戻るボタン用のハンドラー
+      />
+    );
+  }
 
   // ラジオボタン
   const radioButtons = [
@@ -33,9 +41,6 @@ const Settings = () => {
     },
   ];
 
-  // モーダルの状態管理
-  const [activeModal, setactiveModal] = useState(null);
-
   const openModal = (modalType) => {
     setactiveModal(modalType);
   };
@@ -46,6 +51,8 @@ const Settings = () => {
 
   return (
     <div className="settings">
+      <div className="settings-account">
+      <div>アカウント管理</div>
       {loading && <div>認証状態を確認中...</div>}
       {!isLoggedIn && (
         <Link to="/login">
@@ -55,10 +62,14 @@ const Settings = () => {
         </Link>
       )}
       {isLoggedIn && (
-        <div className="settings-account">
-          <div>アカウント管理</div>
+        <div>
           <div className="account-email">登録メールアドレス: {user.email}</div>
-          <Button className="change-password" size="small">
+          <Button
+            className="change-password"
+            variant="secondary"
+            size="small"
+            onClick={() => setCurrentView("passwordChange")}
+          >
             パスワード変更
           </Button>
           <Button
@@ -77,6 +88,7 @@ const Settings = () => {
           </Button>
         </div>
       )}
+      </div>
       <div className="settings-interface">
         <div>インターフェース</div>
         <div className="radio">
@@ -171,7 +183,7 @@ const Settings = () => {
           {(activeModal === "deleteResume" || activeModal === "deleteChat") && (
             <div className="modal-content-confirm">
               <p>
-                {activeModal === "deleteResume" ? "履歴書データ" : "deleteChat"}
+                {activeModal === "deleteResume" ? "履歴書データ" : "チャットデータ"}
                 を本当に削除しますか？　この操作は元に戻せません。
               </p>
               <Button

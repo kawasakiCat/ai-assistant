@@ -10,7 +10,7 @@ import Modal from "../../../components/common/Modal/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const PasswordChangeForm = () => {
+const PasswordChangeForm = ({ onCancel }) => {
   // ログイン状態のチェック
   const { isLoggedIn, loading } = useAuth();
 
@@ -18,12 +18,6 @@ const PasswordChangeForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
-  const toggleConfirmPasswordVisibility = () => {
-    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
-  };
 
   // パスワードの状態管理
   const [currentPassword, setCurremtPassword] = useState("");
@@ -33,7 +27,22 @@ const PasswordChangeForm = () => {
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+  const toggleConfirmPasswordVisibility = () => {
+    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+  };
+
+  const isFormValid =
+    currentPassword &&
+    newPassword &&
+    passwordConfirm &&
+    !passwordError &&
+    !passwordConfirmError;
+  
   const handleNewPasswordChange = (e) => {
     const value = e.target.value;
     setNewPassword(value);
@@ -66,9 +75,11 @@ const PasswordChangeForm = () => {
     try {
       const result = await changePassword(currentPassword, newPassword);
       console.log(result);
-      setIsModalOpen(true);
+      setModalMessage(result.message);
     } catch (error) {
-      console.error("パスワード変更に失敗しました", error);
+      setModalMessage(error.message);
+    } finally {
+      setIsModalOpen(true);
     }
   };
 
@@ -111,7 +122,7 @@ const PasswordChangeForm = () => {
           onChange={handlePasswordcConfirmChange}
           required
           error={passwordConfirmError}
-          helperText="再度、新しいパスワードを入力してください"
+          //helperText="再度、新しいパスワードを入力してください"
         />
         <span
           onClick={toggleConfirmPasswordVisibility}
@@ -124,19 +135,27 @@ const PasswordChangeForm = () => {
       </div>
       <Button
         className="password-change-button"
+        onClick={onCancel}
+        size="small"
+      >
+        戻る
+      </Button>
+      <Button
+        className="password-change-button"
         onClick={handlePasswordSubmit}
         size="small"
+        disabled={!isFormValid}
       >
         送信
       </Button>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="成功"
+        title="パスワード変更処理の結果"
         size="small"
       >
         <div className="modal-content-example">
-          <p>パスワードが正常に変更されました。</p>
+          <p>{modalMessage}</p>
           <Button
             className="close-modal-button"
             onClick={() => setIsModalOpen(false)}
