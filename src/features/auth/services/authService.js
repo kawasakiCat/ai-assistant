@@ -1,7 +1,7 @@
 // authService.js
 
 // APIのベースURL
-const BASE_URL = "https://api.example.com"; // ← 自分のバックエンドURLに変更！
+const BASE_URL = "https://ai-assistant.core-akita.ac.jp/api"; // ← 自分のバックエンドURLに変更！
 
 /**
  * パスワード変更リクエストを送信する関数

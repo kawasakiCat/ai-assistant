@@ -1,5 +1,5 @@
 // useAuth.js
-// 仮です
+// 認証情報を取得してくるフック
 import { useState, useEffect } from "react";
 
 export const useAuth = () => {

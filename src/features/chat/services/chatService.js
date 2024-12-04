@@ -8,7 +8,7 @@ export async function submitMotivationForm(data) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
@@ -16,10 +16,10 @@ export async function submitMotivationForm(data) {
     }
 
     const result = await response.json();
-	  // const result = "APIに送信する関数を呼び出しました";
+    // const result = "APIに送信する関数を呼び出しました";
     return result;
-	} catch (error) {
-		console.error("API呼び出し中にエラーが発生しました:", error);
+  } catch (error) {
+    console.error("API呼び出し中にエラーが発生しました:", error);
     throw error;
   }
 }
