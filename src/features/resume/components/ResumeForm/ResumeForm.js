@@ -5,6 +5,7 @@ import Button from "../../../../components/common/Button/Button";
 import ModalExample from "../../../../ModalExample";
 import '../../../../styles/ResumeForm.css'
 import { Link } from "react-router-dom";
+import DynamicFileDownload from "../services/DynamicFiledownload";
 
 export default function ResumeForm() {
     const [formData, setFormData] = useState({
@@ -423,7 +424,7 @@ function PreviewWindow({ onPrev}) {
 
     return (
         <div>
-            <Button variant="secondary">ダウンロード</Button>
+            <Button variant="secondary" onClick={DynamicFileDownload}>ダウンロード</Button>
             <Button onClick={onPrev}>フォーム入力へ戻る</Button>
             <Link to="/">
                 <Button>モード選択へ</Button>
