@@ -158,18 +158,40 @@ export default function ResumeForm() {
             console.log(formData);
             console.log(processedData);
 
-            const response = await fetch('https://ai-assistant@ai-assistant.core-akita.ac.jp/api/resume', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=UFT-8',
-            },
-            body: JSON.stringify(processedData),
-            });
+            // const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
+            // method: 'POST',
+            // headers: {
+            //   'Content-Type': 'application/json;charset=UFT-8',
+            // },
+            // body: JSON.stringify(processedData),
+            // });
 
-            // const result = await response.json();
+            // // const result = await response.json();
             
-            console.log(response);
-            // console.log(result);
+            // console.log(response);
+            // // console.log(result);
+
+            const response = fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json;charset=UFT-8',
+                },
+                body: JSON.stringify(processedData),
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'out.xlsx'; // ファイル名を指定
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
 
             if (response.ok) {
                 console.log('フォームが送信されました！');
@@ -414,7 +436,8 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
             </div>
 
             <Button onClick={onNext}>プレビュー画面へ</Button>
-            <Button onClick={submit}>送信</Button>
+            {/* <Button onClick={submit}>送信</Button> */}
+            <Button variant="secondary" onClick={submit}>ダウンロード</Button>
             <Button onClick={onPrev}>戻る</Button>
         </div>
     );
@@ -424,7 +447,7 @@ function PreviewWindow({ onPrev}) {
 
     return (
         <div>
-            <Button variant="secondary">ダウンロード</Button>
+            {/* <Button variant="secondary">ダウンロード</Button> */}
             <Button onClick={onPrev}>フォーム入力へ戻る</Button>
             <Link to="/">
                 <Button>モード選択へ</Button>
