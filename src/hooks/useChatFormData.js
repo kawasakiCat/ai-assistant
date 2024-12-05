@@ -1,3 +1,5 @@
+// useChatFormData.js
+// 連想配列を作るフック
 import { useState } from "react";
 
 export const useChatFormData = (defaultValues) => {

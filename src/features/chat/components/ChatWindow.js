@@ -1,11 +1,16 @@
 // ChatWindow.js
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { scenarios } from '../services/ChatScenario';
-import { MotivationForm, SelfPromotionForm } from './ChatForm';
-import { submitMotivationForm, submitSelfPromotionForm } from '../services/chatService';
-import Button from '../../../components/common/Button/Button';
-import '../../../styles/chat.css';
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { scenarios } from "../services/ChatScenario";
+import { MotivationForm, SelfPromotionForm } from "./ChatForm";
+import {
+  submitMotivationForm,
+  submitSelfPromotionForm,
+} from "../services/chatService";
+import Button from "../../../components/common/Button/Button";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faClipboard } from "@fortawesome/free-solid-svg-icons";
+import "../../../styles/chat.css";
 
 // function CopyToClipboard() {
 //   const [resultText, setResultText] = useState();
@@ -26,7 +31,9 @@ const ChatWindow = () => {
   const [messageHistory, setMessageHistory] = useState([]);
   const chatHistoryRef = useRef(null);
 
-  const currentScenario = scenarios.find(scenario => scenario.id === currentScenarioId);
+  const currentScenario = scenarios.find(
+    (scenario) => scenario.id === currentScenarioId
+  );
 
   // メッセージを履歴に追加する関数
   const addMessageToHistory = (message, type = "bot") => {
@@ -76,17 +83,25 @@ const ChatWindow = () => {
   // シナリオに応じてフォームを表示
   const renderForm = () => {
     if (currentScenarioId === "motivation") {
-      return <MotivationForm onFormSubmit={(result) => {
-        addMessageToHistory(result, "user"); // ユーザー入力を履歴に追加
-        setApiResult(result);
-        setCurrentScenarioId("motivation_result");
-      }} />;
+      return (
+        <MotivationForm
+          onFormSubmit={(result) => {
+            addMessageToHistory(result, "user"); // ユーザー入力を履歴に追加
+            setApiResult(result);
+            setCurrentScenarioId("motivation_result");
+          }}
+        />
+      );
     } else if (currentScenarioId === "self_promotion") {
-      return <SelfPromotionForm onFormSubmit={(result) => {
-        addMessageToHistory(result, "user");
-        setApiResult(result);
-        setCurrentScenarioId("self_promotion_result");
-      }} />;
+      return (
+        <SelfPromotionForm
+          onFormSubmit={(result) => {
+            addMessageToHistory(result, "user");
+            setApiResult(result);
+            setCurrentScenarioId("self_promotion_result");
+          }}
+        />
+      );
     }
     return null;
   };
@@ -103,13 +118,11 @@ const ChatWindow = () => {
         {messageHistory.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.type}`}>
             {msg.message}
-            {/* <Button
-              variant="secondary"
+            {/*<span
               onClick={CopyToClipboard}
-              size="small"
             >
-              コピー
-            </Button> */}
+              <FontAwesomeIcon icon={faClipboard} />
+            </span>*/}
           </div>
         ))}
       </div>
@@ -118,35 +131,33 @@ const ChatWindow = () => {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       {/* 現在のシナリオに応じたUI */}
-      {currentScenario.type === "form" ? (
-        renderForm()
-      ) : (
-        currentScenario.options?.map((option, index) => (
-          <Button
-            key={index}
-            onClick={() => handleOptionClick(option.next)}
-            className="chat-option-button"
-          >
-            {option.text}
-          </Button>
-        ))
-      )}
+      {currentScenario.type === "form"
+        ? renderForm()
+        : currentScenario.options?.map((option, index) => (
+            <Button
+              key={index}
+              onClick={() => handleOptionClick(option.next)}
+              className="chat-option-button"
+            >
+              {option.text}
+            </Button>
+          ))}
 
       {/* GoodByeシナリオ */}
       {currentScenarioId === "goodbye" && (
-          <>
-            <Link to="/" onClick={() => console.log('メニューに戻る')}>
-              <Button className="chat-option-button" variant="primary">
-                モード選択
-              </Button>
-            </Link>
-            <Link to="/resume" onClick={() => console.log('履歴書作成へ移動')}>
-              <Button className="chat-option-button" variant="primary">
-                履歴書作成
-              </Button>
-            </Link>
-          </>
-        )}
+        <>
+          <Link to="/" onClick={() => console.log("メニューに戻る")}>
+            <Button className="chat-option-button" variant="primary">
+              モード選択
+            </Button>
+          </Link>
+          <Link to="/resume" onClick={() => console.log("履歴書作成へ移動")}>
+            <Button className="chat-option-button" variant="primary">
+              履歴書作成
+            </Button>
+          </Link>
+        </>
+      )}
     </div>
   );
 };

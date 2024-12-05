@@ -5,6 +5,7 @@ import Button from "../../../../components/common/Button/Button";
 import ModalExample from "../../../../ModalExample";
 import '../../../../styles/ResumeForm.css'
 import { Link } from "react-router-dom";
+import DynamicFileDownload from "../services/DynamicFiledownload";
 
 export default function ResumeForm() {
     const [formData, setFormData] = useState({
