@@ -1,4 +1,4 @@
-// ChatScenario.js
+// scenario.js
 export const scenarios = [
   {
     id: "welcome",
@@ -87,7 +87,7 @@ export const scenarios = [
   },
   {
     id: "assistant_introduction",
-    message: "おまえ",
+    message: "就活アシスタントです。",
     options: [
       { text: "このアプリは何？", next: "app_overview" },
       { text: "使い方を教えて", next: "app_usage_guide" },
