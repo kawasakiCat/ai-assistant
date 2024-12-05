@@ -192,7 +192,10 @@ export default function ResumeForm() {
             // console.log(response);
             // // console.log(result);
 
-            const response = fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
+            //履歴書生成のフェッチ
+            // const response = fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
+            const response = fetch('http://localhost:8081/api/resume/pdf', {
+
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json;charset=UFT-8',
@@ -205,7 +208,8 @@ export default function ResumeForm() {
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
-                    a.download = 'out.xlsx'; // ファイル名を指定
+                    // a.download = 'out.xlsx'; // ファイル名を指定
+                    a.download = 'out.pdf'; // ファイル名を指定                    
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
