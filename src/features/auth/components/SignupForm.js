@@ -69,9 +69,6 @@ const SignupForm = () => {
             setIsModalOpen(true);            
         }
 
-        
-        
-
     };
     
     const closeModal = () => {
