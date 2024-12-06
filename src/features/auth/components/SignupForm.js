@@ -12,8 +12,8 @@ const SignupForm = () => {
     
     //新規登録用のメールアドレス、パスワードの状態管理
     const [ signupData, setSignupData ] = useState({
-        email : "",
-        password : "",
+        signupEmail : "",
+        signupPassword : "",
         confirmPassword: "",
     });
     //パスワード表示の状態管理
@@ -30,7 +30,7 @@ const SignupForm = () => {
     //新規登録用の情報更新
     const handleSignupData = (e) => {
         setSignupData({ ...signupData, [e.target.name]: e.target.value });
-        if( e.target.name === "password" ){
+        if( e.target.name === "signupPassword" ){
             // setSignupData({ ...signupData, [e.target.name]: e.target.value });
             const result = validatePassword(e.target.value);
             if( !result.isValid ){
@@ -56,9 +56,9 @@ const SignupForm = () => {
         const formDataCheck = Object.values(signupData).some(value => value === "" || value === null );
         // console.log(formDataCheck);
 
-        if( signupData.confirmPassword !== signupData.password ){
+        if( signupData.confirmPassword !== signupData.signupPassword ){
             // console.log(signupData.confirmPassword);
-            // console.log(signupData.password);
+            // console.log(signupData.signupPassword);
             setPasswordConfirmError("パスワードが一致していません");
         }else if( passwordError || passwordConfirmError || formDataCheck ){
             console.log("入力エラーがあります");
@@ -66,22 +66,29 @@ const SignupForm = () => {
         }else{
             //問題がなければコンソールに表示（仮）
             console.log(signupData);
-            setIsModalOpen(true);            
+            setIsModalOpen(true);
+            startTimeOut();         
         }
 
     };
     
     const closeModal = () => {
-    setIsModalOpen(false);
+        setIsModalOpen(false);
     };
+
+    //10秒後にモーダルが閉じる
+    const startTimeOut = () => {
+        setTimeout(closeModal, 10000);
+    }
+    
     
     return (
         <form>
             <div>
-                <Input type='text' label="メールアドレス" name="email" onChange={handleSignupData} required helperText="" />
+                <Input type='text' label="メールアドレス" name="signupEmail" onChange={handleSignupData} required helperText="" />
             </div>
             <div className="pw-group">
-                <Input type={isPasswordVisible ? "text" : "password" } label="パスワード" name="password" onChange={handleSignupData} required error={passwordError} helperText="大文字・小文字・数字を含む8文字以上" />
+                <Input type={isPasswordVisible ? "text" : "password" } label="パスワード" name="signupPassword" onChange={handleSignupData} required error={passwordError} helperText="大文字・小文字・数字を含む8文字以上" />
 				<span onClick={togglePasswordVisibility} className="password-toggle-icon">
 					<FontAwesomeIcon icon={isPasswordVisible ? faEyeSlash : faEye} />
 				</span>
