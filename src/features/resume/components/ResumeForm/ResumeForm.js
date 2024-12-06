@@ -3,8 +3,11 @@ import Input from '../../../../components/common/Input/Input';
 import TextArea from "../../../../components/common/TextArea/TextArea";
 import Button from "../../../../components/common/Button/Button";
 import ModalExample from "../../../../ModalExample";
-import '../../../../styles/ResumeForm.css'
 import { Link } from "react-router-dom";
+import { searchAddress } from "../../services/SearchAddress";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import '../../../../styles/ResumeForm.css'
 // import DynamicFileDownload from "../services/DynamicFiledownload";
 
 export default function ResumeForm() {
@@ -99,8 +102,10 @@ export default function ResumeForm() {
         });
     };
 
-    // const months = Array.from({ length: 12 }, (_, i) => i + 1);
-    // console.log(months);
+    //住所情報変更（郵便番号検索用）
+    const handleAddress = (name, value) => {
+        setFormData({ ...formData, [name]: value });
+    };
 
     //学歴・職歴・資格情報変更
     const handleFormGroup = (fieldGroup, key, field, value) => {
@@ -222,14 +227,14 @@ export default function ResumeForm() {
         } catch (error) {
           console.error('送信エラー:', error);
         }
-      };
-      
+    };
+    
     return ( 
 
         <div className="resume-form">
             <ModalExample />
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} />}
-            {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} handleAddress={handleAddress} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 2 && <ResumeForm3 data={formData} handleFormGroup={handleFormGroup} addFunction={addEducation} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 3 && <ResumeForm4 data={formData} handleFormGroup={handleFormGroup} addFunction={addWorkExperience} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 4 && <ResumeForm5 data={formData} handleFormGroup={handleFormGroup} addFunction={addCertification} onNext={NextForm} onPrev={PrevForm} />}
@@ -271,7 +276,7 @@ function ResumeForm1({ data, handleFormData, handleDate, onNext }) {
     );
 }
 
-function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
+function ResumeForm2({ data, handleFormData, handleAddress, onNext, onPrev}) {
 
     const [isChecked, setChecked ] = useState( false );
 
@@ -289,6 +294,9 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
             </div>
             <div>
                 <Input type='text' label="郵便番号" name="postalCode" value={data.postalCode} onChange={handleFormData} required helperText="例: 0100001" />
+                <span onClick={() => searchAddress("address1", handleAddress, data.postalCode, data.address1)}>
+                    <FontAwesomeIcon icon={faWandMagicSparkles} />         
+                </span>
             </div>
             <div>
                 <Input type='text' label="住所" name="address1" value={data.address1} onChange={handleFormData} required helperText="例: " />
@@ -304,7 +312,7 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
               <input type='checkbox' checked={isChecked} onChange={handleCheckChange} />
               <label className="address-text">現住所以外に連絡を希望する場合</label>
 
-              {isChecked && <IsCheckContents data={data} handleFormData={handleFormData} />}
+              {isChecked && <IsCheckContents data={data} handleFormData={handleFormData} handleAddress={handleAddress} />}
             </div>
 
             <Button onClick={onNext}>次へ</Button>
@@ -313,7 +321,7 @@ function ResumeForm2({ data, handleFormData, onNext, onPrev}) {
     );
 }
 
-function IsCheckContents({ data, handleFormData }) {
+function IsCheckContents({ data, handleFormData, handleAddress }) {
     return (
         <div className='isCheckContents'>
             <div>
@@ -327,6 +335,9 @@ function IsCheckContents({ data, handleFormData }) {
             </div>
             <div>
                 <Input type='text' label="郵便番号" name="postalCodeAlt" value={data.postalCodeAlt} onChange={handleFormData} required helperText="例: 0100001" />
+                <span onClick={() => searchAddress("address1Alt", handleAddress, data.postalCodeAlt, data.address1Alt)}>
+                    <FontAwesomeIcon icon={faWandMagicSparkles} />         
+                </span>
             </div>
             <div>
                 <Input type='text' label="住所" name="address1Alt" value={data.address1Alt} onChange={handleFormData} required helperText="例: " />
