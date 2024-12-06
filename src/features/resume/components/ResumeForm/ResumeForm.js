@@ -231,7 +231,7 @@ export default function ResumeForm() {
     
     return ( 
 
-        <div className="resume-form">
+        <form className="resume-form">
             <ModalExample />
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} handleAddress={handleAddress} onNext={NextForm} onPrev={PrevForm} />}
@@ -241,7 +241,7 @@ export default function ResumeForm() {
             {currentForm === 5 && <ResumeForm6 data={formData} textCount={textCount} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 6 && <ResumeForm7 data={formData} textCount={textCount} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
             {currentForm === 7 && <PreviewWindow data={formData} onPrev={PrevForm} />}
-        </div>
+        </form>
     );
 }
 

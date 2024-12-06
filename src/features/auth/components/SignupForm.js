@@ -35,14 +35,9 @@ const SignupForm = () => {
             const result = validatePassword(e.target.value);
             if( !result.isValid ){
                 setPasswordError(result.message);
+            }else{
+                setPasswordError("");
             }
-        }else if( e.target.name === "confirmPassword" ){
-            // setSignupData({ ...signupData, [e.target.name]: e.target.value });
-            if( signupData.confirmPassword !== signupData.password ){
-                setPasswordConfirmError("パスワードが一致していません");
-            }
-        }else{
-            // setSignupData({ ...signupData, [e.target.name]: e.target.value });
         }
     };
 
@@ -54,8 +49,37 @@ const SignupForm = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
     };
     
+    //送信用
+    const handleSignupSubmit = async () => {
+
+        //新規登録用の情報に空白がないかチェック（空白があればtrueを返す）
+        const formDataCheck = Object.values(signupData).some(value => value === "" || value === null );
+        // console.log(formDataCheck);
+
+        if( signupData.confirmPassword !== signupData.password ){
+            // console.log(signupData.confirmPassword);
+            // console.log(signupData.password);
+            setPasswordConfirmError("パスワードが一致していません");
+        }else if( passwordError || passwordConfirmError || formDataCheck ){
+            console.log("入力エラーがあります");
+            return;
+        }else{
+            //問題がなければコンソールに表示（仮）
+            console.log(signupData);
+            setIsModalOpen(true);            
+        }
+
+        
+        
+
+    };
+    
+    const closeModal = () => {
+    setIsModalOpen(false);
+    };
+    
     return (
-        <div>
+        <form>
             <div>
                 <Input type='text' label="メールアドレス" name="email" onChange={handleSignupData} required helperText="" />
             </div>
@@ -71,20 +95,20 @@ const SignupForm = () => {
 					<FontAwesomeIcon icon={isConfirmPasswordVisible ? faEyeSlash : faEye} />
 				</span>
             </div>
-            <Button>新規登録</Button>
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="お知らせ" size="">
+            <Button onClick={handleSignupSubmit}>新規登録</Button>
+            <Modal isOpen={isModalOpen} onClose={closeModal} title="お知らせ" size="small">
                 <div>
                     <p>ご入力のメールアドレス宛に登録確認のURLを送信しました。
                         この画面を閉じて、受信したメールに記載されているURLからログインをしてください。
                         ※10秒経過後この画面は自動的に閉じます。
                     </p>
-                    <Button className="close-modal-button" onClick={() => setIsModalOpen(false)}>
+                    <Button className="close-modal-button" onClick={closeModal}>
                         閉じる
                     </Button>
                 </div>
             </Modal>
             <Link to="/login">アカウントをお持ちの方</Link>
-        </div>
+        </form>
     );
 };
 
