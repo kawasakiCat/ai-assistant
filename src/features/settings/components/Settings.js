@@ -156,6 +156,7 @@ const Settings = () => {
             <div className="modal-content-term">
               <Terms />
               <Button
+                variant="secondary"
                 className="close-modal-button"
                 onClick={closeModal}
                 size="small"
