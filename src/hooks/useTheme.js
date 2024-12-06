@@ -1,3 +1,5 @@
+// useTheme.js
+// カラーモードを適用するフック
 import { useState, useEffect } from "react";
 
 const getSystemTheme = () => {

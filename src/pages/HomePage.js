@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Button from '../components/common/Button/Button';
-import Navigation from '../components/Navigation/Navigation';
+import React from "react";
+import { Link } from "react-router-dom";
+import Button from "../components/common/Button/Button";
+import Navigation from "../components/Navigation/Navigation";
 
 const HomePage = () => {
   return (
-		<div>
+    <div>
       <Navigation />
-	    <h1>モード選択</h1>
+      <h1>モード選択</h1>
       <div className="mode-item">
         <Link to="/chat">
           <Button className="mode-item-button" variant="primary">
@@ -26,8 +26,8 @@ const HomePage = () => {
           </Button>
         </Link>
       </div>
-		</div>
-	);
+    </div>
+  );
 };
 
 export default HomePage;
