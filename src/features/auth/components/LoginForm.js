@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from '../../../components/common/Input/Input';
 import Button from "../../../components/common/Button/Button";
-// import { validatePassword } from "../services/validation";
+import { validatePassword } from "../services/validation";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -24,11 +24,36 @@ const LoginForm = () => {
     const handleLoginData = (e) => {
         setloginData({ ...loginData, [e.target.name]: e.target.value });
         //エラー情報更新
+        if( e.target.name === "password" ){
+            const result = validatePassword(e.target.value);
+            if( !result.isValid ){
+                setPasswordError(result.message);
+            }else{
+                setPasswordError("");
+            }
+        }
     };
 
     //パスワード表示情報更新
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
+    };
+
+    //送信用
+    const handleLoginSubmit = async () => {
+
+        //ログイン用の情報に空白がないかチェック（空白があればtrueを返す）
+        const formDataCheck = Object.values(loginData).some(value => value === "" || value === null );
+        console.log(formDataCheck);
+
+        if( passwordError || formDataCheck ){
+            console.log("入力エラーがあります");
+            return;
+        }else{
+            //問題がなければコンソールに表示（仮）
+            console.log(loginData);
+        }
+    
     };
 
     return (
@@ -42,7 +67,7 @@ const LoginForm = () => {
 					<FontAwesomeIcon icon={isPasswordVisible ? faEyeSlash : faEye} />
 				</span>
             </div>
-            <Button>ログイン</Button>
+            <Button onClick={handleLoginSubmit}>ログイン</Button>
             <Link to="">パスワードをお忘れの方</Link>
             <Link to="/signup">アカウントをお持ちでない方</Link>
         </div>

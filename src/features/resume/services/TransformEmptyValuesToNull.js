@@ -14,8 +14,10 @@ function transformEmptyValuesToNull(data) {
       );
     }
   
+    // if()
+
     return data; // そのまま返す
-  
+
 }
 
 export default transformEmptyValuesToNull;
