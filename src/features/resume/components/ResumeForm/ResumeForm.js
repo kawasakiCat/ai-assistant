@@ -5,7 +5,7 @@ import Button from "../../../../components/common/Button/Button";
 import ModalExample from "../../../../ModalExample";
 import '../../../../styles/ResumeForm.css'
 import { Link } from "react-router-dom";
-import DynamicFileDownload from "../services/DynamicFiledownload";
+// import DynamicFileDownload from "../services/DynamicFiledownload";
 
 export default function ResumeForm() {
     const [formData, setFormData] = useState({
@@ -13,7 +13,12 @@ export default function ResumeForm() {
         firstName: '',
         lastNameKana: '',
         firstNameKana: '',
-        birthDate: '',
+        birthDate: {
+            year: '',
+            month: '',
+            date: '',
+        },
+        age: '',
         gender: '',
         email: '',
         telNo: '',
@@ -56,7 +61,11 @@ export default function ResumeForm() {
         motivation: '',
         selfPromotion: '',
         desiredColumn: '',
-        date: '',
+        date: {
+            year: '',
+            month: '',
+            date: '',
+        },
 
     });
     const [textCount, setTextCount] = useState({
@@ -66,7 +75,7 @@ export default function ResumeForm() {
     });
     const [currentForm, setCurrentForm] = useState(0);
   
-    //履歴書情報変更ハンドラー
+    //履歴書情報変更
     const handleFormData = (e) => {
         if( e.target.name === 'motivation' || e.target.name === 'selfPromotion' ){
             if( e.target.value.length <= 400 ){
@@ -83,7 +92,17 @@ export default function ResumeForm() {
         };
     };
 
-    //学歴情報変更ハンドラー
+    //生年月日・提出日付情報変更
+    const handleDate = (fieldGroup, key, value) => {
+        setFormData({ ...formData, [fieldGroup]:
+            { ...formData[fieldGroup], [key]: value }
+        });
+    };
+
+    // const months = Array.from({ length: 12 }, (_, i) => i + 1);
+    // console.log(months);
+
+    //学歴・職歴・資格情報変更
     const handleFormGroup = (fieldGroup, key, field, value) => {
         setFormData({ ...formData, [fieldGroup]: 
             { ...formData[fieldGroup],
@@ -95,7 +114,8 @@ export default function ResumeForm() {
         });
     };
 
-    //学歴情報追加ハンドラー
+
+    //学歴情報追加
     const addEducation = () => {
         const nextKey = `education${Object.keys(formData.education).length + 1}`;
         setFormData({ ...formData, education: 
@@ -111,7 +131,7 @@ export default function ResumeForm() {
         });
     };
 
-    //職歴情報追加ハンドラー
+    //職歴情報追加
     const addWorkExperience = () => {
         const nextKey = `workExperience${Object.keys(formData.workExperience).length + 1}`;
         setFormData({ ...formData, workExperience: 
@@ -127,7 +147,7 @@ export default function ResumeForm() {
         });
     };
 
-    //資格情報追加ハンドラー
+    //資格情報追加
     const addCertification = () => {
         const nextKey = `certification${Object.keys(formData.certification).length + 1}`;
         setFormData({ ...formData, certification: 
@@ -159,17 +179,40 @@ export default function ResumeForm() {
             console.log(formData);
             console.log(processedData);
 
-            const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/resume', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(processedData),
-            });
+            // const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
+            // method: 'POST',
+            // headers: {
+            //   'Content-Type': 'application/json;charset=UFT-8',
+            // },
+            // body: JSON.stringify(processedData),
+            // });
 
-            const result = await response.json();
+            // // const result = await response.json();
             
-            console.log(result);
+            // console.log(response);
+            // // console.log(result);
+
+            const response = fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json;charset=UFT-8',
+                },
+                body: JSON.stringify(processedData),
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'out.xlsx'; // ファイル名を指定
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
 
             if (response.ok) {
                 console.log('フォームが送信されました！');
@@ -185,19 +228,19 @@ export default function ResumeForm() {
 
         <div className="resume-form">
             <ModalExample />
-            {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} onNext={NextForm} />}
+            {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 2 && <ResumeForm3 data={formData} handleFormGroup={handleFormGroup} addFunction={addEducation} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 3 && <ResumeForm4 data={formData} handleFormGroup={handleFormGroup} addFunction={addWorkExperience} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 4 && <ResumeForm5 data={formData} handleFormGroup={handleFormGroup} addFunction={addCertification} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 5 && <ResumeForm6 data={formData} textCount={textCount} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
-            {currentForm === 6 && <ResumeForm7 data={formData} textCount={textCount} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
+            {currentForm === 6 && <ResumeForm7 data={formData} textCount={textCount} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
             {currentForm === 7 && <PreviewWindow data={formData} onPrev={PrevForm} />}
         </div>
     );
 }
 
-function ResumeForm1({ data, handleFormData, onNext }) {
+function ResumeForm1({ data, handleFormData, handleDate, onNext }) {
     return (
         <div>
             <div className='form-group'>
@@ -213,7 +256,12 @@ function ResumeForm1({ data, handleFormData, onNext }) {
                 <Input type='text' label="名（かな）" name="firstNameKana" value={data.firstNameKana} onChange={handleFormData} required helperText="例: こあ" />
             </div>
             <div>
-                <Input type='text' label="生年月日" name="birthDate" value={data.birthDate} onChange={handleFormData} required helperText="例: " />
+                <Input type='text' label="生年月日 年" name="year" value={data.birthDate.year} onChange={(e) => handleDate( 'birthDate', 'year', e.target.value)} required helperText="例: " />
+                <Input type='text' label="月" name="month" value={data.birthDate.month} onChange={(e) => handleDate( 'birthDate', 'month', e.target.value)} required helperText="例: " />
+                <Input type='text' label="日" name="date" value={data.birthDate.date} onChange={(e) => handleDate( 'birthDate', 'date', e.target.value)} required helperText="例: " />
+            </div>
+            <div>
+                <Input type='text' label="年齢" name="age" value={data.age} onChange={handleFormData} required helperText="例: " />
             </div>
             <div>
                 <Input type='text' label="性別（任意）" name="gender" value={data.gender} onChange={handleFormData} required helperText="例: 女" />
@@ -402,7 +450,7 @@ function ResumeForm6({ data, textCount, handleFormData, onNext, onPrev }) {
     );
 };
 
-function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }) {
+function ResumeForm7({ data, textCount, handleFormData, handleDate, onNext, onPrev, submit }) {
     return (
         <div>
             <div className='form-group'>
@@ -410,11 +458,14 @@ function ResumeForm7({ data, textCount, handleFormData, onNext, onPrev, submit }
                 <div>{textCount.desiredColumn} / 150</div>
             </div>
             <div>
-                <Input type='text' label="履歴書提出日付" name="date" value={data.date} onChange={handleFormData} required helperText="例: " />
+                <Input type='text' label="履歴書提出日付 年" name="year" value={data.date.year} onChange={(e) => handleDate( 'date', 'year', e.target.value)} required helperText="例: " />
+                <Input type='text' label="月" name="month" value={data.date.month} onChange={(e) => handleDate( 'date', 'month', e.target.value)} required helperText="例: " />
+                <Input type='text' label="日" name="date" value={data.date.date} onChange={(e) => handleDate( 'date', 'date', e.target.value)} required helperText="例: " />
             </div>
 
             <Button onClick={onNext}>プレビュー画面へ</Button>
-            <Button onClick={submit}>送信</Button>
+            {/* <Button onClick={submit}>送信</Button> */}
+            <Button variant="secondary" onClick={submit}>ダウンロード</Button>
             <Button onClick={onPrev}>戻る</Button>
         </div>
     );
@@ -424,7 +475,7 @@ function PreviewWindow({ onPrev}) {
 
     return (
         <div>
-            <DynamicFileDownload />
+            {/* <Button variant="secondary">ダウンロード</Button> */}
             <Button onClick={onPrev}>フォーム入力へ戻る</Button>
             <Link to="/">
                 <Button>モード選択へ</Button>
