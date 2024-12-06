@@ -1,0 +1,35 @@
+/* AddNoteForm.css */
+.noteform-container {
+	position: relative;
+}
+
+.noteform-container .add-note-form {
+	position: absolute;
+	border-radius: 12px;
+	top: 0;
+	left: 0;
+	padding: 8px;
+	min-width: 100px;
+	background: var(--bg-gradient);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transform: scaleY(0);
+	transform-origin: top;
+	transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+	opacity: 0;
+	z-index: 888;
+}
+
+.noteform-container.open .add-note-form {
+	transform: scaleY(1);
+	opacity: 1;
+}
+
+.noteform-toggle-button {
+	position: relative;
+	z-index: 888;
+}
+
+.noteform-button-container {
+	display: flex;
+	min-width: 100%;
+}

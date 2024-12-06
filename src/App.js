@@ -15,18 +15,20 @@ const App = () => {
   useTheme();
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/resume" element={<ResumePage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/memo" element={<MemoPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/title" element={<TitlePage />} />
-      </Routes>
-    </Router>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/resume" element={<ResumePage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/memo" element={<MemoPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/title" element={<TitlePage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 };
 
