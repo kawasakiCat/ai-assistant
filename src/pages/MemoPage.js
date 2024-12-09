@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navigation from "../components/Navigation/Navigation";
+// import Navigation from "../components/Navigation/Navigation";
 import NotePanel from "../components/Note/NotePanel";
 
 const MemoPage = () => {
@@ -8,8 +8,17 @@ const MemoPage = () => {
     return savedNotes ? JSON.parse(savedNotes) : [];
   });
 
+  const handleAddNote = (text) => {
+    const newNote = { id: Date.now(), text };
+    const updatedNotes = [...notes, newNote];
+    setNotes(updatedNotes);
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+  };
+
   const handleDeleteNote = (id) => {
-    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    const updatedNotes = notes.filter((note) => note.id !== id);
+    setNotes(updatedNotes);
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
   };
   
   return (
@@ -19,7 +28,7 @@ const MemoPage = () => {
       <p>
         モーダルウィンドウっぽく全面に表示するならこのページはいらないのかもしれない
       </p>
-      <NotePanel notes={notes} onDeleteNote={handleDeleteNote} />
+      <NotePanel notes={notes} onAddNote={handleAddNote} onDeleteNote={handleDeleteNote} />
     </div>
   );
 };

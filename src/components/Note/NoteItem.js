@@ -1,5 +1,5 @@
 // NoteItem.js
-import React , { useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../common/Button/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faExpand, faClipboard } from "@fortawesome/free-solid-svg-icons";
@@ -25,20 +25,20 @@ const NoteItem = ({ note, onDelete }) => {
 			<div className="note-button-container">
 				<Button
 					className="note-delete-button"
-					onClick={onDelete} // 親コンポーネントにIDを渡す
-					>
-						<FontAwesomeIcon icon={faTrash} />
+					onClick={onDelete}
+				>
+					<FontAwesomeIcon icon={faTrash} />
 				</Button>
 				<Button
 					className="note-open-button"
 					onClick={handleExpand}
-					>
+				>
 					<FontAwesomeIcon icon={faExpand} />
 				</Button>
 				<Button
 					className="note-clip-button"
 					onClick={handleCopy}
-					>
+				>
 					<FontAwesomeIcon icon={faClipboard} />
 				</Button>
 			</div>

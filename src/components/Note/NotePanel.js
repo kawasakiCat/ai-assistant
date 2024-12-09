@@ -8,27 +8,14 @@ import "./Note.css";
 import NoteItem from './NoteItem';
 import AddNoteForm from './AddNoteForm';
 
-const NotePanel = ({ notes, onDeleteNote }) => {
+const NotePanel = ({ notes, onAddNote, onDeleteNote }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  // const [notes, setNotes] = useState(() => {
-  //   const savedNotes = localStorage.getItem("notes");
-  //   return savedNotes ? JSON.parse(savedNotes) : [];
-  // });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNoteId, setSelectedNoteId] = useState(null);
 
-
-
   const toggleNote = () => setIsOpen(!isOpen);
-
   const toggleForm = () => setIsFormOpen(!isFormOpen);
-
-  const addNote = (newNote) => {
-    const updateNotes = [...notes, { id: Date.now(), text: newNote }];
-    localStorage.setItem("notes", JSON.stringify(updateNotes));
-    setIsFormOpen(false);
-  };
 
   const handleDeleteClick = (noteId) => {
     setSelectedNoteId(noteId);
@@ -37,7 +24,7 @@ const NotePanel = ({ notes, onDeleteNote }) => {
 
   const handleConfirmDelete = () => {
     if (selectedNoteId !== null) {
-      deleteNote(selectedNoteId);
+      onDeleteNote(selectedNoteId);
     }
     setIsModalOpen(false);
     setSelectedNoteId(null);
@@ -46,12 +33,6 @@ const NotePanel = ({ notes, onDeleteNote }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedNoteId(null);
-  };
-
-  const deleteNote = (id) => {
-    // 削除対象のidと一致しないノートだけ残す
-    const updatedNotes = notes.filter((note) => note.id !== id);
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
   };
 
   return (
@@ -89,7 +70,7 @@ const NotePanel = ({ notes, onDeleteNote }) => {
         ) : (
           <p>保存済みのメモはありません</p>
         )}
-        <AddNoteForm isOpen={isFormOpen} onToggle={toggleForm} onAdd={addNote} />
+        <AddNoteForm isOpen={isFormOpen} onToggle={toggleForm} onAdd={onAddNote} />
       </div>
 
       <Modal
