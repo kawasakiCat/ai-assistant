@@ -1,7 +1,8 @@
 import React from 'react';
 import Navigation from '../components/Navigation/Navigation';
 import PasswordForgot from '../features/auth/components/PasswordForgotForm';
-import PasswordChangeForm from '../features/auth/components/PasswordChangeForm';
+import PasswordForgotChange from '../features/auth/components/PasswordForgotChangeForm';
+
 
 const PassewordForgotPage = () => {
     return (
@@ -9,7 +10,7 @@ const PassewordForgotPage = () => {
 			<Navigation />
             <h1>パスワードをお忘れですか？</h1>
             <PasswordForgot />
-            <PasswordChangeForm />
+            <PasswordForgotChange />
         </>
     );
 }

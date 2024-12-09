@@ -146,7 +146,7 @@ const PasswordChangeForm = ({ onCancel }) => {
         className="password-change-button"
         onClick={handlePasswordSubmit}
         size="small"
-        disabled={!isFormValid}
+        // disabled={!isFormValid}
       >
         送信
       </Button>
