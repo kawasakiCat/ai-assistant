@@ -49,6 +49,15 @@ const SignupForm = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
     };
     
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    //10秒後にモーダルが閉じる
+    const startTimeOut = () => {
+        setTimeout(closeModal, 10000);
+    }
+
     //送信用
     const handleSignupSubmit = async () => {
 
@@ -70,17 +79,7 @@ const SignupForm = () => {
             startTimeOut();         
         }
 
-    };
-    
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
-    //10秒後にモーダルが閉じる
-    const startTimeOut = () => {
-        setTimeout(closeModal, 10000);
-    }
-    
+    };    
     
     return (
         <form>
