@@ -21,6 +21,14 @@ const MemoPage = () => {
     localStorage.setItem("notes", JSON.stringify(updatedNotes));
   };
   
+  const handleEditNote = (id, updatedText) => {
+    const updatedNotes = notes.map((note) =>
+      note.id === id ? { ...note, text: updatedText } : note
+  );
+    setNotes(updatedNotes);
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+  };
+
   return (
     <div>
       {/* <Navigation /> */}
@@ -28,7 +36,7 @@ const MemoPage = () => {
       <p>
         モーダルウィンドウっぽく全面に表示するならこのページはいらないのかもしれない
       </p>
-      <NotePanel notes={notes} onAddNote={handleAddNote} onDeleteNote={handleDeleteNote} />
+      <NotePanel notes={notes} onAddNote={handleAddNote} onDeleteNote={handleDeleteNote} onUpdateNotes={handleEditNote} />
     </div>
   );
 };
