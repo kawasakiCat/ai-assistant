@@ -133,13 +133,15 @@ const PasswordChangeForm = ({ onCancel }) => {
           />
         </span>
       </div>
-      <Button
-        className="password-change-button"
-        onClick={onCancel}
-        size="small"
-      >
-        戻る
-      </Button>
+      {isLoggedIn && (
+        <Button
+          className="password-change-button"
+          onClick={onCancel}
+          size="small"
+        >
+          戻る
+        </Button>
+      )}
       <Button
         className="password-change-button"
         onClick={handlePasswordSubmit}

@@ -62,12 +62,15 @@
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	padding: 16px;
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: auto 1fr;
-	grid-gap: 12px;
+	grid-gap: 16px;
 	position: absolute;
-	bottom: 60px;
+	bottom: 80px;
 	right: 0;
+	width: 30vw;
+	max-width: 400px;
+	height: 300px;
 	transform: translateX(100%);
 	backdrop-filter: blur(1px);
 	opacity: 0;
@@ -90,9 +93,9 @@
 	border-radius: 8px;
 	color: var(--text-primary);
 	background: var(--gradient-vibrant2);
-	width: 72px;
-	height: 72px;
-	min-width: auto;
+	width: auto;
+	height: 80px;
+	min-width: 1fr;
 	word-wrap: break-word;
 	white-space: normal;
 }

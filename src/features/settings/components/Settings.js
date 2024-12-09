@@ -6,6 +6,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../../components/common/Modal/Modal";
 import Button from "../../../components/common/Button/Button";
 import PasswordChangeForm from "../../auth/components/PasswordChangeForm";
+import Terms from "../../../components/Terms/Terms";
 
 const Settings = () => {
   const { isLoggedIn, user, loading } = useAuth(); // ログイン状態のチェック
@@ -153,8 +154,9 @@ const Settings = () => {
         >
           {activeModal === "terms" && (
             <div className="modal-content-term">
-              <p>利用規約の内容</p>
+              <Terms />
               <Button
+                variant="secondary"
                 className="close-modal-button"
                 onClick={closeModal}
                 size="small"
