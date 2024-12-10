@@ -1,25 +1,25 @@
 export const sample_motivation_it1 = {
-  "targetIndustry": "IT業界",
-  "targetCompany": "大手IT企業",
-  "outline": "最初に自身のスキルや経験を述べ、企業選びの理由を示し、最後に将来のビジョンを語る構成",
-  "purpose": "自身のスキルと経験が企業のプロダクト開発に貢献できることを印象付けたい",
-  "personalBackground": "学生時代にフロントエンド開発に興味を持ち、Reactを中心としたスキルを独学で磨いた",
-  "careerGoals": "大手IT企業で多くのユーザーに価値を提供するプロダクトを作る経験を積みたい",
-  "companyUnderstanding": "大手IT企業の規模感と影響力、さらに最先端の技術を用いる開発環境に魅力を感じた",
-  "matchingElements": "Reactを用いたフロントエンド開発経験があり、貴社のユーザー目線の開発方針に共感",
-  "previouseStatement": "学内でのアプリ開発プロジェクトを通じて得た経験を活かし、より大規模なプロダクト開発に挑戦したい"
+  targetIndustry: "IT業界",
+  targetCompany: "大手IT企業",
+  outline: "最初に自身のスキルや経験を述べ、企業選びの理由を示し、最後に将来のビジョンを語る構成",
+  purpose: "自身のスキルと経験が企業のプロダクト開発に貢献できることを印象付けたい",
+  personalBackground: "学生時代にフロントエンド開発に興味を持ち、Reactを中心としたスキルを独学で磨いた",
+  careerGoals: "大手IT企業で多くのユーザーに価値を提供するプロダクトを作る経験を積みたい",
+  companyUnderstanding: "大手IT企業の規模感と影響力、さらに最先端の技術を用いる開発環境に魅力を感じた",
+  matchingElements: "Reactを用いたフロントエンド開発経験があり、貴社のユーザー目線の開発方針に共感",
+  previouseStatement: "学内でのアプリ開発プロジェクトを通じて得た経験を活かし、より大規模なプロダクト開発に挑戦したい"
 }
 
 export const sample_selfpr_it1 = {
-	"targetIndustry": "IT業界",
-	"targetCompany": "大手IT企業",
-	"strengths": "Reactを用いたフロントエンド開発経験が豊富",
-	"studentExperience": "学内でアプリ開発チームを結成し、校内イベント向けのアプリを制作",
-	"achievements": "制作したアプリが学内で1000回以上ダウンロードされた",
-	"personality": "チームの中で調整役としての役割を担い、意見をまとめるのが得意",
-	"futureGoals": "将来的にユーザー体験を重視したプロダクトを作りたい",
-	"outline": "最初に結論を述べて、次に理由を述べ、最後に将来のビジョンを述べる",
-	"purpose": "ユーザー目線の開発に強みがあるという印象を与えること"
+	targetIndustry: "IT業界",
+	targetCompany: "大手IT企業",
+	strengths: "Reactを用いたフロントエンド開発経験が豊富",
+	studentExperience: "学内でアプリ開発チームを結成し、校内イベント向けのアプリを制作",
+	achievements: "制作したアプリが学内で1000回以上ダウンロードされた",
+	personality: "チームの中で調整役としての役割を担い、意見をまとめるのが得意",
+	futureGoals: "将来的にユーザー体験を重視したプロダクトを作りたい",
+	outline: "最初に結論を述べて、次に理由を述べ、最後に将来のビジョンを述べる",
+	purpose: "ユーザー目線の開発に強みがあるという印象を与えること"
 }
 
 export const sample_motivation_it2 = {
