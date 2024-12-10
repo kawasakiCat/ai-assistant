@@ -25,31 +25,18 @@ const ChatWindow = () => {
   };
 
   // welcome以外、シナリオ変更時にメッセージを履歴に追加
-  // useEffect(() => {
-  //   if (currentScenario.id !== "welcome") {
-  //     addMessageToHistory(currentScenario.message);
-  //   }
-  // }, [currentScenario]);
-  
-  // useEffect(() => {
-  //   if (currentScenarioId === "welcome") {
-  //     addMessageToHistory(currentScenario.message);
-  //   }
-  // }, []);
-
-  // 条件特になし
   useEffect(() => {
-    if (currentScenario) {
+    if (currentScenario.id !== "welcome") {
       addMessageToHistory(currentScenario.message);
     }
   }, [currentScenario]);
 
   // メッセージ履歴が更新されたら自動スクロール
-  // useEffect(() => {
-  //   if (chatHistoryRef.current) {
-  //     chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
-  //   }
-  // }, [messageHistory]);
+  useEffect(() => {
+    if (chatHistoryRef.current) {
+      chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+    }
+  }, [messageHistory]);
 
   // API呼び出し処理
   useEffect(() => {
@@ -86,7 +73,7 @@ const ChatWindow = () => {
       return (
         <SelfPromotionForm
           onFormSubmit={(result) => {
-            addMessageToHistory(result, "user");
+            addMessageToHistory(result, "bot");
             setApiResult(result);
             setCurrentScenarioId("self_promotion_result");
           }}
@@ -106,6 +93,9 @@ const ChatWindow = () => {
     <div className="chat-window">
       {/* メッセージ履歴を表示 */}
       <div className="chat-history" ref={chatHistoryRef}>
+        <div class="chat-message bot">
+          こんにちは！私はあなたの就活アシスタントです。就職活動は挑戦の連続ですが、私が全力でサポートしますので、一緒に前進しましょう！何をお手伝いしましょうか？
+        </div>
         {messageHistory.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.type}`}>
             {msg.message}
