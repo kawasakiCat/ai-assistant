@@ -193,8 +193,8 @@ export default function ResumeForm() {
             // // console.log(result);
 
             //履歴書生成のフェッチ
-            // const response = fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
-            const response = fetch('http://localhost:8081/api/resume/pdf', {
+            const response = fetch('https://ai-assistant.core-akita.ac.jp/api/resume/pdf', {
+            // const response = fetch('http://localhost:8081/api/resume/pdf', {
 
                 method: 'POST',
                 headers: {
