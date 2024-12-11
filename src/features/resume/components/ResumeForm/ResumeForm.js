@@ -69,7 +69,7 @@ export default function ResumeForm() {
             month: null,
             date: null,
         },
-
+        image: null,
     });
     const [textCount, setTextCount] = useState({
         motivation: 0,
@@ -166,7 +166,16 @@ export default function ResumeForm() {
             },
         });
     };
-        
+    
+    //証明写真
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file); // Blob URLを作成
+            setFormData({ ...formData, image: imageUrl });
+        }
+    };
+
     const NextForm = () => {
         setCurrentForm(currentForm + 1);
     };
@@ -265,8 +274,9 @@ export default function ResumeForm() {
             {currentForm === 3 && <ResumeForm4 data={formData} handleFormGroup={handleFormGroup} addFunction={addWorkExperience} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 4 && <ResumeForm5 data={formData} handleFormGroup={handleFormGroup} addFunction={addCertification} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 5 && <ResumeForm6 data={formData} textCount={textCount} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
-            {currentForm === 6 && <ResumeForm7 data={formData} textCount={textCount} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
-            {currentForm === 7 && <PreviewWindow data={formData} onPrev={PrevForm} PreviewPDF={PreviewPDF} />}
+            {currentForm === 6 && <ResumeForm7 data={formData} textCount={textCount} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} onPrev={PrevForm} />}
+            {currentForm === 7 && <ResumeForm8 data={formData} handleImageUpload={handleImageUpload} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
+            {currentForm === 8 && <PreviewWindow data={formData} onPrev={PrevForm} PreviewPDF={PreviewPDF} />}
         </form>
     );
 }
@@ -311,7 +321,7 @@ function ResumeForm2({ data, handleFormData, handleAddress, onNext, onPrev}) {
     };
   
     return (
-        <div>
+        <Card>
             <div className='form-group'>
                 <Input type='text' label="メールアドレス" name="email" value={data.email} onChange={handleFormData} required helperText="例: koa1@sample.com" />
             </div>
@@ -343,7 +353,7 @@ function ResumeForm2({ data, handleFormData, handleAddress, onNext, onPrev}) {
 
             <Button onClick={onNext}>次へ</Button>
             <Button onClick={onPrev}>戻る</Button>
-        </div>
+        </Card>
     );
 }
 
@@ -380,7 +390,7 @@ function IsCheckContents({ data, handleFormData, handleAddress }) {
 
 function ResumeForm3({ data, handleFormGroup, addFunction, onNext, onPrev }) {
     return (
-        <div>
+        <Card>
             {Object.keys(data.education).map( (key, index) => (
                 <div key={key}>
                     <div className='form-group'>
@@ -403,13 +413,13 @@ function ResumeForm3({ data, handleFormGroup, addFunction, onNext, onPrev }) {
             <Button onClick={addFunction}>学歴を追加</Button>
             <Button onClick={onNext}>次へ</Button>
             <Button onClick={onPrev}>戻る</Button>
-        </div>
+        </Card>
     );
 };
 
 function ResumeForm4({ data, handleFormGroup, addFunction, onNext, onPrev }) {
     return (
-        <div>
+        <Card>
             {Object.keys(data.workExperience).map( (key, index) => (
                 <div key={key}>
                     <div className='form-group'>
@@ -433,13 +443,13 @@ function ResumeForm4({ data, handleFormGroup, addFunction, onNext, onPrev }) {
             <Button onClick={onNext}>次へ</Button>
             <Button onClick={onPrev}>戻る</Button>
 
-        </div>
+        </Card>
     );
 };
 
 function ResumeForm5({ data, handleFormGroup, addFunction, onNext, onPrev }) {
     return (
-        <div>
+        <Card>
             {Object.keys(data.certification).map( (key, index) => (
                 <div key={key}>
                     <div className='form-group'>
@@ -459,7 +469,7 @@ function ResumeForm5({ data, handleFormGroup, addFunction, onNext, onPrev }) {
             <Button onClick={addFunction}>免許・資格を追加</Button>
             <Button onClick={onNext}>次へ</Button>
             <Button onClick={onPrev}>戻る</Button>
-        </div>
+        </Card>
     );
 };
 
@@ -469,7 +479,7 @@ function ResumeForm6({ data, textCount, handleFormData, onNext, onPrev }) {
     // const remainingSelfPromotion = 400 - textCount.selfPromotion;
 
     return (
-        <div>
+        <Card>
             <div className='form-group'>
                 <TextArea type='text' label="志望動機" name="motivation" value={data.motivation} onChange={handleFormData} required />
                 <div>{textCount.motivation} / 400</div>
@@ -483,13 +493,13 @@ function ResumeForm6({ data, textCount, handleFormData, onNext, onPrev }) {
 
             <Button onClick={onNext}>次へ</Button>
             <Button onClick={onPrev}>戻る</Button>
-        </div>
+        </Card>
     );
 };
 
-function ResumeForm7({ data, textCount, handleFormData, handleDate, onNext, onPrev, submit }) {
+function ResumeForm7({ data, textCount, handleFormData, handleDate, onNext, onPrev }) {
     return (
-        <div>
+        <Card>
             <div className='form-group'>
                 <TextArea type='text' label="本人希望欄" name="desiredColumn" value={data.desiredColumn} onChange={handleFormData} required helperText="例: 貴社の規定に従います。" />
                 <div>{textCount.desiredColumn} / 150</div>
@@ -500,18 +510,38 @@ function ResumeForm7({ data, textCount, handleFormData, handleDate, onNext, onPr
                 <Input type='text' label="日" name="date" value={data.date.date} onChange={(e) => handleDate( 'date', 'date', e.target.value)} required helperText="例: " />
             </div>
 
+            <Button onClick={onNext}>次へ</Button>
+            <Button onClick={onPrev}>戻る</Button>
+        </Card>
+    );
+};
+
+function ResumeForm8({ data, handleImageUpload, onNext, onPrev, submit}) {
+    return (
+        <Card>
+            <Input type='file' accept="image/*" label="証明写真" name="image" onChange={handleImageUpload} 
+            helperText="※写真は40mm × 30mmサイズに変更されます。 写真によっては正しく変更されない可能性があります。" />
+            {/* もし画像がアップロードされていたらプレビューを表示する */}
+            { data.image && (
+                <div>
+                    <p>プレビュー</p>
+                    <img src={data.image} alt="プレビュー画像" />
+                </div>
+            )}
+
+
             <Button onClick={onNext}>プレビュー画面へ</Button>
             {/* <Button onClick={submit}>送信</Button> */}
             <Button variant="secondary" onClick={submit}>ダウンロード</Button>
             <Button onClick={onPrev}>戻る</Button>
-        </div>
+        </Card>
     );
 };
 
 function PreviewWindow({ onPrev, PreviewPDF}) {
 
     return (
-        <div>
+        <Card>
             {/* <Button variant="secondary">ダウンロード</Button> */}
             <iframe id="pdfPreview"></iframe>
             <Button onClick={PreviewPDF} disabled>PDFをロード</Button>
@@ -519,6 +549,6 @@ function PreviewWindow({ onPrev, PreviewPDF}) {
             <Link to="/">
                 <Button>モード選択へ</Button>
             </Link>
-        </div>
+        </Card>
     );
 }

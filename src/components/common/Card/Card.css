@@ -17,10 +17,11 @@
 }
 /* .card-primary {
     color: var(--text-primary);
-    background: var(--bg-gradient);
-} */
+    } */
 .card-primary {
-    background: rgba(255, 255, 255, 0.2); 
+    /* background: rgba(255, 255, 255, 0.2);  */
+    /* background: var(--bg-gradient); */
+    background: var(--bg-main);
 }
 
 .card-secondary {
