@@ -42,7 +42,7 @@ export function MotivationForm({ onFormSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    // 履歴をメッセージに追加
+    // メッセージ追加
     // onFormSubmit({
     //   id: "motivation_generate",
     //   message: "入力内容をもとに志望動機を生成しています...",
@@ -210,7 +210,7 @@ export function SelfPromotionForm({ onFormSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    // 履歴をメッセージに追加
+    // メッセージ追加
     // onFormSubmit({
     //   id: "self_promotion_generate",
     //   message: "入力内容をもとに自己PRを生成しています...",
@@ -356,6 +356,7 @@ export function SelfPromotionForm({ onFormSubmit }) {
         <span>サンプルデータ入力用:</span>
         {Object.keys(sampleData).map((type) => (
           <Button
+            variant="secondary"
             type="button"
             size="small"
             onClick={() => handleSetSampleData(type)}
