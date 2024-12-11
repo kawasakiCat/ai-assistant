@@ -3,26 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { scenarios } from "../services/ChatScenario";
 import { MotivationForm, SelfPromotionForm } from "./ChatForm";
-import {
-  submitMotivationForm,
-  submitSelfPromotionForm,
-} from "../services/chatService";
 import Button from "../../../components/common/Button/Button";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import "../../../styles/chat.css";
-
-// function CopyToClipboard() {
-//   const [resultText, setResultText] = useState();
-//   const copyToClipboard = async () => {
-//     try {
-//       await global.navigator.clipboard.writeText(resultText);
-//       setResultText('コピーしました');
-//     } catch (err) {
-//       setResultText('コピーに失敗しました');
-//     }
-//   }
-// }
 
 const ChatWindow = () => {
   const [currentScenarioId, setCurrentScenarioId] = useState("welcome");
@@ -40,9 +24,9 @@ const ChatWindow = () => {
     setMessageHistory((prev) => [...prev, { type, message }]);
   };
 
-  // シナリオ変更時にメッセージを履歴に追加
+  // welcome以外、シナリオ変更時にメッセージを履歴に追加
   useEffect(() => {
-    if (currentScenario) {
+    if (currentScenario.id !== "welcome") {
       addMessageToHistory(currentScenario.message);
     }
   }, [currentScenario]);
@@ -60,14 +44,8 @@ const ChatWindow = () => {
       if (currentScenario.type === "api_call") {
         try {
           let result;
-
-          if (currentScenario.api === "generateMotivation") {
-            result = await submitMotivationForm(apiResult);
-          } else if (currentScenario.api === "generateSelfPromotion") {
-            result = await submitSelfPromotionForm(apiResult);
-          }
-
           setApiResult(result);
+          console.log(result);
           addMessageToHistory(result, "bot"); // API結果を履歴に追加
           setCurrentScenarioId(currentScenario.next); // 次のシナリオへ
         } catch (error) {
@@ -76,7 +54,6 @@ const ChatWindow = () => {
         }
       }
     };
-
     handleApiCall();
   }, [currentScenario, apiResult]);
 
@@ -86,7 +63,7 @@ const ChatWindow = () => {
       return (
         <MotivationForm
           onFormSubmit={(result) => {
-            addMessageToHistory(result, "user"); // ユーザー入力を履歴に追加
+            addMessageToHistory(result, "bot");
             setApiResult(result);
             setCurrentScenarioId("motivation_result");
           }}
@@ -96,7 +73,7 @@ const ChatWindow = () => {
       return (
         <SelfPromotionForm
           onFormSubmit={(result) => {
-            addMessageToHistory(result, "user");
+            addMessageToHistory(result, "bot");
             setApiResult(result);
             setCurrentScenarioId("self_promotion_result");
           }}
@@ -107,7 +84,8 @@ const ChatWindow = () => {
   };
 
   // ユーザーオプションのクリック処理
-  const handleOptionClick = (nextScenarioId) => {
+  const handleOptionClick = (nextScenarioId, selectedOptionText) => {
+    addMessageToHistory(selectedOptionText , "user");
     setCurrentScenarioId(nextScenarioId);
   };
 
@@ -115,9 +93,13 @@ const ChatWindow = () => {
     <div className="chat-window">
       {/* メッセージ履歴を表示 */}
       <div className="chat-history" ref={chatHistoryRef}>
+        <div className="chat-message bot">
+          こんにちは！私はあなたの就活アシスタントです。就職活動は挑戦の連続ですが、私が全力でサポートしますので、一緒に前進しましょう！何をお手伝いしましょうか？
+        </div>
         {messageHistory.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.type}`}>
             {msg.message}
+            {/* API呼んで生成したメッセージはコピーボタンを作る */}
             {/*<span
               onClick={CopyToClipboard}
             >
@@ -136,7 +118,7 @@ const ChatWindow = () => {
         : currentScenario.options?.map((option, index) => (
             <Button
               key={index}
-              onClick={() => handleOptionClick(option.next)}
+              onClick={() => handleOptionClick(option.next, option.text)}
               className="chat-option-button"
             >
               {option.text}

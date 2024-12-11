@@ -1,8 +1,11 @@
+// chatSesrvice.js
+
 const API_BASE_URL = "https://ai-assistant.core-akita.ac.jp/api"; // 例: 本番用URL
 
 // 志望動機を生成するAPI
 export async function submitMotivationForm(data) {
   try {
+    console.log("send : motivation");
     const response = await fetch(`${API_BASE_URL}/motivation`, {
       method: "POST",
       headers: {
@@ -16,8 +19,9 @@ export async function submitMotivationForm(data) {
     }
 
     const result = await response.json();
-    // const result = "APIに送信する関数を呼び出しました";
-    return result;
+    console.log(result);
+    console.log(result.reply);
+    return result.reply;
   } catch (error) {
     console.error("API呼び出し中にエラーが発生しました:", error);
     throw error;
@@ -27,10 +31,11 @@ export async function submitMotivationForm(data) {
 // 自己PRを生成するAPI
 export async function submitSelfPromotionForm(data) {
   try {
+    console.log("send : selfPR");
     // const response = await fetch(`${API_BASE_URL}/selfPR`, {
     //   method: "POST",
     //   headers: {
-    //     "Content-Type": "application/json",
+    //     "Content-Type": "application/json;charset=UTF-8",
     //   },
     //   body: JSON.stringify(data),
     // });
@@ -40,8 +45,9 @@ export async function submitSelfPromotionForm(data) {
     // }
 
     // const result = await response.json();
-    const result = "APIに送信する関数を呼び出しました";
-    return result;
+    // console.log(result);
+    // console.log(result.reply);
+    // return result.reply;
   } catch (error) {
     console.error("API呼び出し中にエラーが発生しました:", error);
     throw error;

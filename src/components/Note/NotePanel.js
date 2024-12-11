@@ -1,125 +1,154 @@
-// NotePanel.js
-import React, { useState } from 'react';
-import Button from '../common/Button/Button';
-import Modal from '../common/Modal/Modal';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileLines, } from "@fortawesome/free-solid-svg-icons";
-import "./Note.css";
-import NoteItem from './NoteItem';
-import AddNoteForm from './AddNoteForm';
+// // NotePanel.js
+// import React, { useState } from 'react';
+// import Button from '../common/Button/Button';
+// import Modal from '../common/Modal/Modal';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faFileLines, faClipboard, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
+// import "./Note.css";
+// import NoteItem from './NoteItem';
+// import AddNoteForm from './AddNoteForm';
+// import TextArea from '../common/TextArea/TextArea';
 
-const NotePanel = ({ notes, onDeleteNote }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  // const [notes, setNotes] = useState(() => {
-  //   const savedNotes = localStorage.getItem("notes");
-  //   return savedNotes ? JSON.parse(savedNotes) : [];
-  // });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedNoteId, setSelectedNoteId] = useState(null);
+// const NotePanel = ({ notes, onAddNote, onDeleteNote, onUpdateNotes }) => {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [isFormOpen, setIsFormOpen] = useState(false);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   // const [selectedNoteId, setSelectedNoteId] = useState(null);
+//   const [selectedNote, setSelectedNote] = useState(null);
 
+//   const toggleNote = () => setIsOpen(!isOpen);
+//   const toggleForm = () => setIsFormOpen(!isFormOpen);
 
+//   const handleEditNote = (id, updatedText) => {
+//     const updatedNotes = notes.map((note) =>
+//       note.id === id ? { ...note, text: updatedText } : note
+//     );
+//     onUpdateNotes(updatedNotes);
+//   };
 
-  const toggleNote = () => setIsOpen(!isOpen);
+//   const handleCloseEditModal = () => setSelectedNote(null);
 
-  const toggleForm = () => setIsFormOpen(!isFormOpen);
+//   const handleDeleteClick = (noteId) => {
+//     setSelectedNote(noteId);
+//     setIsModalOpen(true);
+//   }
 
-  const addNote = (newNote) => {
-    const updateNotes = [...notes, { id: Date.now(), text: newNote }];
-    localStorage.setItem("notes", JSON.stringify(updateNotes));
-    setIsFormOpen(false);
-  };
+//   const handleConfirmDelete = () => {
+//     if (selectedNote !== null) {
+//       onDeleteNote(selectedNote);
+//     }
+//     setIsModalOpen(false);
+//     setSelectedNote(null);
+//   }
 
-  const handleDeleteClick = (noteId) => {
-    setSelectedNoteId(noteId);
-    setIsModalOpen(true);
-  }
+//   const handleCloseModal = () => {
+//     setIsModalOpen(false);
+//     setSelectedNote(null);
+//     setSelectedNote(null);
+//   };
 
-  const handleConfirmDelete = () => {
-    if (selectedNoteId !== null) {
-      deleteNote(selectedNoteId);
-    }
-    setIsModalOpen(false);
-    setSelectedNoteId(null);
-  }
+//   return (
+//     <div className="sliding-note-container">
+//       <div className={`note-panel ${isOpen ? "open" : ""}`}>
+//         {/* メモが保存されていたら<NoteItem />をこの中にタイルっぽく表示、なかったら「保存済みのメモはありませんと表示」 */}
+//         {notes.length > 0 ? (
+//           notes.map((note) => (
+//             <NoteItem
+//               key={note.id}
+//               note={note}
+//               onDelete={() => handleDeleteClick(note.id)}
+//               onOpen={() => setSelectedNote(note)}
+//             />
+//           ))
+//         ) : (
+//           <p>保存済みのメモはありません</p>
+//         )}
+//         <AddNoteForm isOpen={isFormOpen} onToggle={toggleForm} onAdd={onAddNote} />
+//       </div>
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedNoteId(null);
-  };
+//       <Button
+//         className="note-toggle-button"
+//         aria-label="Toggle notes panel"
+//         onClick={toggleNote}
+//         variant="primary"
+//       >
+//         <div className={`note-icon ${isOpen ? "open" : ""}`}>
+//             <FontAwesomeIcon icon={isOpen ? faFileLines : faXmark} />
+//           {/* {isOpen &&
+//             <div className={`note-icon ${isOpen}`}>
+//               <span className="icon-bar"></span>
+//               <span className="icon-bar"></span>
+//               <span className="icon-bar"></span>
+//             </div>
+//           } */}
+//         </div>
+//       </Button>
 
-  const deleteNote = (id) => {
-    // 削除対象のidと一致しないノートだけ残す
-    const updatedNotes = notes.filter((note) => note.id !== id);
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
-  };
+//       {selectedNote && (
+//         <Modal
+//           isOpen={!!selectedNote}
+//           onClose={handleCloseEditModal}
+//           title="ノートの編集"
+//         >
+//           <TextArea
+//             value={selectedNote?.text || ""}
+//             onChange={(e) =>
+//               setSelectedNote({ ...selectedNote, text: e.target.value })
+//             }
+//           />
 
-  return (
-    <div className="sliding-note-container">
-      <Button
-        className="note-toggle-button"
-        aria-label="Toggle notes panel"
-        onClick={toggleNote}
-        variant="primary"
-      >
-        <div className={`note-icon ${isOpen ? "open" : ''}`}>
-          {!isOpen &&
-            <FontAwesomeIcon icon={faFileLines} />
-          }
-          {isOpen &&
-            <div className={`note-icon ${isOpen}`}>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </div>
-          }
-        </div>
-      </Button>
+//           <Button
+//             className="note-delete-button"
+//           >
+//             <FontAwesomeIcon icon={faTrash} />
+//           </Button>
+//           <Button
+//             className="note-clip-button"
+//           // onClick={}
+//           >
+//             <FontAwesomeIcon icon={faClipboard} />
+//           </Button>
 
-      <div className={`note-panel ${isOpen ? "open" : ""}`}>
-        {/* メモが保存されていたら<NoteItem />をこの中にタイルっぽく表示、なかったら「保存済みのメモはありませんと表示」 */}
-        {notes.length > 0 ? (
-          notes.map((note) => (
-            <NoteItem
-              key={note.id}
-              note={note}
-              onDelete={() => handleDeleteClick(note.id)}
-            />
-          ))
-        ) : (
-          <p>保存済みのメモはありません</p>
-        )}
-        <AddNoteForm isOpen={isFormOpen} onToggle={toggleForm} onAdd={addNote} />
-      </div>
+//           <Button
+//             variant="primary"
+//             onClick={() => {
+//               handleEditNote(selectedNote.id, selectedNote.text);
+//               handleCloseModal();
+//             }}
+//           >
+//             保存
+//           </Button>
+//         </Modal>
+//       )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        title="削除の確認"
-        size="small"
-      >
-        <p>本当にこのノートを削除しますか？</p>
-        <div className="modal-actions">
-          <Button
-            variant="danger"
-            size="small"
-            onClick={handleConfirmDelete}
-            className="confirm-button"
-          >
-            削除する
-          </Button>
-          <Button
-            variant="secondary"
-            size="small"
-            onClick={handleCloseModal}
-            className="cancel-button"
-          >
-            キャンセル
-          </Button>
-        </div>
-      </Modal>
-    </div>
-  );
-};
+//       <Modal
+//         isOpen={isModalOpen}
+//         onClose={handleCloseModal}
+//         title="削除の確認"
+//         size="small"
+//       >
+//         <p>本当にこのノートを削除しますか？</p>
+//         <div className="modal-actions">
+//           <Button
+//             variant="danger"
+//             size="small"
+//             onClick={handleConfirmDelete}
+//             className="confirm-button"
+//           >
+//             削除する
+//           </Button>
+//           <Button
+//             variant="secondary"
+//             size="small"
+//             onClick={handleCloseModal}
+//             className="cancel-button"
+//           >
+//             キャンセル
+//           </Button>
+//         </div>
+//       </Modal>
+//     </div >
+//   );
+// };
 
-export default NotePanel;
+// export default NotePanel;
