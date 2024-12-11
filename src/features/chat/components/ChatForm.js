@@ -5,12 +5,24 @@ import {
   submitMotivationForm,
   submitSelfPromotionForm,
 } from "../services/chatService";
+import {
+  sample_motivation_it1,
+  sample_motivation_it2,
+  sample_motivation_medical,
+  sample_motivation_financial,
+  sample_motivation_bridal,
+  sample_selfpr_it1,
+  sample_selfpr_it2,
+  sample_selfpr_medical,
+  sample_selfpr_financial,
+  sample_selfpr_bridal,
+} from "../data/SampleJson";
 import TextArea from "../../../components/common/TextArea/TextArea";
 import Button from "../../../components/common/Button/Button";
 import Input from "../../../components/common/Input/Input";
 
 export function MotivationForm({ onFormSubmit }) {
-  const [formData, updateFormData] = useChatFormData({
+  const [formData, setFormData] = useChatFormData({
     targetIndustry: null,
     targetCompany: null,
     outline: null,
@@ -24,7 +36,7 @@ export function MotivationForm({ onFormSubmit }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    updateFormData(name, value);
+    setFormData(name, value);
   };
 
   const handleSubmit = async (e) => {
@@ -37,6 +49,20 @@ export function MotivationForm({ onFormSubmit }) {
     } catch (error) {
       console.error("送信中にエラー", error);
     }
+  };
+
+  const sampleData = {
+    IT業界1: sample_motivation_it1,
+    IT業界2: sample_motivation_it2,
+    医療事務: sample_motivation_medical,
+    経理事務: sample_motivation_financial,
+    ブライダル: sample_motivation_bridal,
+  }
+
+  const handleSetSampleData = (type) => {
+    Object.entries(sampleData[type]).forEach(([key, value]) => {
+      setFormData(key, value);
+    });
   };
 
   return (
@@ -103,7 +129,7 @@ export function MotivationForm({ onFormSubmit }) {
         type="text"
         label="企業への理解"
         name="companyUnderstanting"
-        value={formData.companyUnderstanting}
+        value={formData.companyUnderstanding}
         onChange={handleInputChange}
         required
         helperText="企業の事業内容、企業の理念や文化、注目している製品やサービス、企業の社会的意義や将来性、企業の特徴や強みなど"
@@ -129,12 +155,28 @@ export function MotivationForm({ onFormSubmit }) {
         rows={2}
       />
       <Button type="submit">送信</Button>
+
+      <div>
+        <span>サンプルデータ入力用:</span>
+        {Object.keys(sampleData).map((type) => (
+          <Button
+            variant="secondary"
+            size="small"
+            type="button"
+            className="fill-sampledata-button"
+            onClick={() => handleSetSampleData(type)}
+            key={type}
+          >
+            {type}
+          </Button>
+        ))}
+      </div>
     </form>
   );
 }
 
 export function SelfPromotionForm({ onFormSubmit }) {
-  const [formData, updateFormData] = useChatFormData({
+  const [formData, setFormData] = useChatFormData({
     targetIndustry: null,
     targetCompany: null,
     outline: null,
@@ -150,7 +192,7 @@ export function SelfPromotionForm({ onFormSubmit }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    updateFormData(name, value);
+    setFormData(name, value);
   };
 
   const handleSubmit = async (e) => {
@@ -162,6 +204,20 @@ export function SelfPromotionForm({ onFormSubmit }) {
     } catch (error) {
       console.error("送信中にエラー", error);
     }
+  };
+
+  const sampleData = {
+    IT業界1: sample_selfpr_it1,
+    IT業界2: sample_selfpr_it2,
+    医療事務: sample_selfpr_medical,
+    経理事務: sample_selfpr_financial,
+    ブライダル: sample_selfpr_bridal,
+  }
+
+  const handleSetSampleData = (type) => {
+    Object.entries(sampleData[type]).forEach(([key, value]) => {
+      setFormData(key, value);
+    });
   };
 
   return (
@@ -271,6 +327,20 @@ export function SelfPromotionForm({ onFormSubmit }) {
       <Button type="submit" onClick={handleSubmit}>
         送信
       </Button>
+
+      <div>
+        <span>サンプルデータ入力用:</span>
+        {Object.keys(sampleData).map((type) => (
+          <Button
+            type="button"
+            size="small"
+            onClick={() => handleSetSampleData(type)}
+            key={type}
+          >
+            {type}
+          </Button>
+        ))}
+      </div>
     </form>
   );
 }

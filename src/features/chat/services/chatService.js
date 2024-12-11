@@ -32,22 +32,22 @@ export async function submitMotivationForm(data) {
 export async function submitSelfPromotionForm(data) {
   try {
     console.log("send : selfPR");
-    // const response = await fetch(`${API_BASE_URL}/selfPR`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json;charset=UTF-8",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
+    const response = await fetch(`${API_BASE_URL}/selfpr`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify(data),
+    });
 
-    // if (!response.ok) {
-    //   throw new Error(`HTTPエラー! ステータス: ${response.status}`);
-    // }
+    if (!response.ok) {
+      throw new Error(`HTTPエラー! ステータス: ${response.status}`);
+    }
 
-    // const result = await response.json();
-    // console.log(result);
-    // console.log(result.reply);
-    // return result.reply;
+    const result = await response.json();
+    console.log(result);
+    console.log(result.reply);
+    return result.reply;
   } catch (error) {
     console.error("API呼び出し中にエラーが発生しました:", error);
     throw error;

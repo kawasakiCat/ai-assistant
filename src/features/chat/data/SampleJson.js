@@ -1,3 +1,4 @@
+// SampleJson.js
 export const sample_motivation_it1 = {
   targetIndustry: "IT業界",
   targetCompany: "大手IT企業",
@@ -19,7 +20,9 @@ export const sample_selfpr_it1 = {
 	personality: "チームの中で調整役としての役割を担い、意見をまとめるのが得意",
 	futureGoals: "将来的にユーザー体験を重視したプロダクトを作りたい",
 	outline: "最初に結論を述べて、次に理由を述べ、最後に将来のビジョンを述べる",
-	purpose: "ユーザー目線の開発に強みがあるという印象を与えること"
+	purpose: "ユーザー目線の開発に強みがあるという印象を与えること",
+  values: "チームでの協力とユーザー視点を大切にする",
+  interests: "Reactを用いたUI開発と最新技術の学習"
 }
 
 export const sample_motivation_it2 = {
