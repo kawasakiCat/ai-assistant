@@ -42,12 +42,24 @@ export function MotivationForm({ onFormSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    // 履歴をメッセージに追加
+    // onFormSubmit({
+    //   id: "motivation_generate",
+    //   message: "入力内容をもとに志望動機を生成しています...",
+    //   type: "api_call"
+    // });
+
     try {
       const result = await submitMotivationForm(formData);
       console.log("APIの結果:", result);
       onFormSubmit(result);
     } catch (error) {
       console.error("送信中にエラー", error);
+      onFormSubmit({
+        id: "error",
+        message: "エラーが発生しました。もう一度試してください。",
+        type: "error",
+      });
     }
   };
 
@@ -197,12 +209,24 @@ export function SelfPromotionForm({ onFormSubmit }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
+    // 履歴をメッセージに追加
+    // onFormSubmit({
+    //   id: "self_promotion_generate",
+    //   message: "入力内容をもとに自己PRを生成しています...",
+    //   type: "api_call"
+    // });
     try {
       const result = await submitSelfPromotionForm(formData);
       console.log("APIの結果:", result);
       onFormSubmit(result);
     } catch (error) {
       console.error("送信中にエラー", error);
+      onFormSubmit({
+        id: "error",
+        message: "エラーが発生しました。もう一度試してください。",
+        type: "error",
+      });
     }
   };
 
