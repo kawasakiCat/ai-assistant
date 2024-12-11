@@ -3,6 +3,7 @@ import Navigation from "../components/Navigation/Navigation";
 import Card from "../components/common/Card/Card";
 import { Link } from "react-router-dom";
 import '../styles/help.css';
+// import CardExample from "../CardExample";
 
 const HelpPage = () => {
     return (
@@ -32,27 +33,22 @@ const HelpPage = () => {
                 <div>フォームに履歴書情報を入力してExcelデータで作成できます。</div>
                 <Link to="/resume">
                     <Button>
-
+                        履歴書作成へ
                     </Button>
                 </Link>
             </Card>
 
             <Card title="ログイン">
                 <div>ログイン時のチャット履歴が保存され、文章生成モード内で履歴の閲覧が可能になります。</div>
-                <Link to="/login">
+                {/* もしログインしていなかったら */}
+                {/* <Link to="/login">
                     <Button>
-
+                        ログインする
                     </Button>
-                </Link>
+                </Link> */}
             </Card>
 
-            <Card title="推し">
-                鈴木健矢
-            </Card>
-            <Card variant="secondary" size="small" title="推し">
-                鈴木健矢
-            </Card>
-
+            {/* <CardExample /> */}
         </div>
     );
 }

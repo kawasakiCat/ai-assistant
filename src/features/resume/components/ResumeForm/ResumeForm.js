@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { searchAddress } from "../../services/SearchAddress";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
-import '../../../../styles/ResumeForm.css'
+import '../../../../styles/resumeForm.css'
 import Card from "../../../../components/common/Card/Card";
 // import DynamicFileDownload from "../services/DynamicFiledownload";
 

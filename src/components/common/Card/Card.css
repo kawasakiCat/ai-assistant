@@ -7,7 +7,7 @@
     backdrop-filter: blur(10px); 
     border: 1px solid rgba(255, 255, 255, 0.3); 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 300px;   
+    /* max-width: 300px;    */
     margin: 20px auto;    
 }
 .card-title {
@@ -34,11 +34,11 @@
     color: var(--primary);
 }
 .card-normal {
-    max-width: 800px;
+    max-width: 80%;
     min-height: 80px;
 }
 .card-small {
-    max-width: 250px;
+    max-width: 50%;
     min-height: 80px;
 }
 .card-contetns {
