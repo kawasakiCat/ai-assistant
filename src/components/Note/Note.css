@@ -1,0 +1,118 @@
+/* Note.css */
+.sliding-note-container {
+	display: flex;
+	justify-content: center;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 666;
+}
+
+.note-toggle-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.2s ease-in-out;
+	/* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+.note-toggle-button:hover {
+	transform: scale(1.05);
+}
+
+.note-icon {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.2s ease-in-out;
+}
+
+.note-icon.open {
+	transform: rotate(90deg);
+}
+
+.note-icon .icon-bar {
+	position: relative;
+	display: block;
+	border-radius: 10px;
+	width: 18px;
+	height: 2px;
+	background-color: var(--bg-light);
+	margin: 3px 0;
+}
+
+.note-icon.open span:nth-of-type(1) {
+	top: 8px;
+	transform: rotate(225deg);
+}
+
+.note-icon.open span:nth-of-type(3) {
+	top: -8px;
+	transform: rotate(-225deg);
+}
+
+.note-icon.open span:nth-of-type(2) {
+	opacity: 0;
+}
+
+.note-panel {
+	background: var(--bg-gradient);
+	border-radius: 12px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	padding: 16px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: auto 1fr;
+	grid-gap: 16px;
+	position: absolute;
+	bottom: 80px;
+	right: 0;
+	width: 30vw;
+	max-width: 400px;
+	height: 300px;
+	transform: translateX(100%);
+	backdrop-filter: blur(1px);
+	opacity: 0;
+	visibility: hidden;
+	transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+.note-panel.open {
+	transform: translateX(0);
+	opacity: 1;
+	visibility: visible;
+}
+
+.note-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	margin: 5px 0;
+	border-radius: 8px;
+	color: var(--text-primary);
+	background: var(--gradient-vibrant2);
+	width: auto;
+	height: 80px;
+	min-width: 1fr;
+	word-wrap: break-word;
+	white-space: normal;
+}
+
+.note-item-button {
+	padding: 12px;
+	font-size: 14px;
+}
+
+.note-button-container {
+	display: flex;
+	border-radius: 8px;
+	background-image: var(--gradient-vibrant1);
+}
+
+@media (max-width: 768px) {
+	.note-note-panel {
+		grid-template-columns: 1fr;
+	}
+}

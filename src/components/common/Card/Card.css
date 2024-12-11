@@ -1,4 +1,40 @@
 /* Card.css */
-.card {
+@import url('../../../styles/themes.css');
 
+.card {
+    box-shadow: 0 2px 5px var(--shadow-dark);
+	border-radius: 8px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+.card-title {
+    font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.card-primary {
+    color: var(--text-primary);
+    background-color: var(--bg-gradient);
+}
+.card-secondary {
+    /* color: var(--primary); */
+    background-color: var(--bg-light);
+
+}
+.title-primary {
+
+}
+.title-secondary {
+    color: var(--primary);
+}
+.card-normal {
+    max-width: 800px;
+    min-height: 80px;
+}
+.card-small {
+    max-width: 250px;
+    min-height: 80px;
+}
+.card-contetns {
+    color: var(--text-primary);
 }

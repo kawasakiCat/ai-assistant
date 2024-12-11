@@ -12,7 +12,7 @@ export const useAuth = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const userData = await fakeAuthAPI(true); // 認証状態をチェックする（ここはAPIやライブラリと連携）
+        const userData = await fakeAuthAPI(false); // 認証状態をチェックする（ここはAPIやライブラリと連携）
         setIsLoggedIn(!!userData); // userDataがある＝ログイン済み
         setUser(userData);         // ユーザーデータをセット
       } catch (err) {

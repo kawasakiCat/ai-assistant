@@ -39,7 +39,8 @@
 	--shadow-dark: rgba(163, 177, 198, 0.7);
 	
 	/* Text Colors - よりシャープな文字色 */
-	--text-primary: #1a1a1a;
+	/* --text-primary: #1a1a1a; */
+	--text-primary: #0d0d0d;
 	--text-secondary: #4a4a4a;
 	--text-disabled: #a3a3a3;
 	
