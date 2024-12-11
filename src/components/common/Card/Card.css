@@ -2,28 +2,34 @@
 @import url('../../../styles/themes.css');
 
 .card {
-    box-shadow: 0 2px 5px var(--shadow-dark);
 	border-radius: 8px;
 	padding: 20px;
-	margin-bottom: 20px;
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;   
+    margin: 20px auto;    
 }
 .card-title {
     font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
-.card-primary {
+/* .card-primary {
     color: var(--text-primary);
-    background-color: var(--bg-gradient);
-}
-.card-secondary {
-    /* color: var(--primary); */
-    background-color: var(--bg-light);
-
-}
-/* .title-primary {
-
+    background: var(--bg-gradient);
 } */
+.card-primary {
+    background: rgba(255, 255, 255, 0.2); 
+}
+
+.card-secondary {
+    color: var(--text-primary);
+    background: var(--bg-light);
+}
+.title-primary {
+    color: var(--text-secondary);
+}
 .title-secondary {
     color: var(--primary);
 }

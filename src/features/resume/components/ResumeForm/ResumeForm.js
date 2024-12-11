@@ -7,66 +7,67 @@ import { searchAddress } from "../../services/SearchAddress";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
 import '../../../../styles/ResumeForm.css'
+import Card from "../../../../components/common/Card/Card";
 // import DynamicFileDownload from "../services/DynamicFiledownload";
 
 export default function ResumeForm() {
     const [formData, setFormData] = useState({
-        lastName: '',
-        firstName: '',
-        lastNameKana: '',
-        firstNameKana: '',
+        lastName: null,
+        firstName: null,
+        lastNameKana: null,
+        firstNameKana: null,
         birthDate: {
-            year: '',
-            month: '',
-            date: '',
+            year: null,
+            month: null,
+            date: null,
         },
-        age: '',
-        gender: '',
-        email: '',
-        telNo: '',
-        postalCode: '',
-        address1: '',
-        address2: '',
-        addressKana: '',
-        emailAlt: '',
-        telNoAlt: '',
-        postalCodeAlt: '',
-        address1Alt: '',
-        address2Alt: '',
-        addressKanaAlt: '',
+        age: null,
+        gender: null,
+        email: null,
+        telNo: null,
+        postalCode: null,
+        address1: null,
+        address2: null,
+        addressKana: null,
+        emailAlt: null,
+        telNoAlt: null,
+        postalCodeAlt: null,
+        address1Alt: null,
+        address2Alt: null,
+        addressKanaAlt: null,
         education: {
             education1: {
-                year: '',
-                month: '',
-                schoolName: '',
-                department: '',
-                status: '',
+                year: null,
+                month: null,
+                schoolName: null,
+                department: null,
+                status: null,
             },
         },
         workExperience: {
             workExperience1: {
-                year: '',
-                month: '',
-                companyName: '',
-                status: '',
-                jobDescription: '',
+                year: null,
+                month: null,
+                companyName: null,
+                status: null,
+                jobDescription: null,
             },
         },
         certification: {
             certification1: {
-                year: '',
-                month: '',
-                certification: '',
-                status: '',
+                year: null,
+                month: null,
+                certification: null,
+                status: null,
             },
         },
-        motivation: '',
-        selfPromotion: '',
-        desiredColumn: '',
+        motivation: null,
+        selfPromotion: null,
+        desiredColumn: null,
         date: {
-            year: '',
-            month: '',
-            date: '',
+            year: null,
+            month: null,
+            date: null,
         },
 
     });
@@ -125,11 +126,11 @@ export default function ResumeForm() {
         setFormData({ ...formData, education: 
             { ...formData.education,
                 [nextKey]: {
-                year: '',
-                month: '',
-                schoolName: '',
-                department: '',
-                status: '',
+                year: null,
+                month: null,
+                schoolName: null,
+                department: null,
+                status: null,
                 },
             },
         });
@@ -141,11 +142,11 @@ export default function ResumeForm() {
         setFormData({ ...formData, workExperience: 
             { ...formData.workExperience,
                 [nextKey]: {
-                year: '',
-                month: '',
-                companyName: '',
-                status: '',
-                jobDescription: '',
+                year: null,
+                month: null,
+                companyName: null,
+                status: null,
+                jobDescription: null,
                 },
             },
         });
@@ -157,10 +158,10 @@ export default function ResumeForm() {
         setFormData({ ...formData, certification: 
             { ...formData.certification,
                 [nextKey]: {
-                year: '',
-                month: '',
-                certification: '',
-                status: '',
+                year: null,
+                month: null,
+                certification: null,
+                status: null,
                 },
             },
         });
@@ -174,14 +175,14 @@ export default function ResumeForm() {
         setCurrentForm(currentForm - 1);
     };
     
-    
+    //ダウンロード
     const handleSubmit = async () => {
         try {
-            const processedData = Object.fromEntries(
-                Object.entries(formData).map(([key, value]) => [key, value === "" ? null : value])
-            );
+            // const processedData = Object.fromEntries(
+            //     Object.entries(formData).map(([key, value]) => [key, value === "" ? null : value])
+            // );
             console.log(formData);
-            console.log(processedData);
+            // console.log(processedData);
 
             // const response = await fetch('https://ai-assistant.core-akita.ac.jp/api/resume/excel', {
             // method: 'POST',
@@ -202,7 +203,7 @@ export default function ResumeForm() {
                 headers: {
                   'Content-Type': 'application/json;charset=UFT-8',
                 },
-                body: JSON.stringify(processedData),
+                body: JSON.stringify(formData),
                 })
                 .then(response => response.blob())
                 .then(blob => {
@@ -229,6 +230,32 @@ export default function ResumeForm() {
         }
     };
     
+    //プレビュー表示（仮）
+    const PreviewPDF = () => {
+        try{
+            fetch('http://localhost:8081/api/resume/pdf', {
+                // fetch('http://localhost:8081/assets/template/resume_template.pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    //bodyに必要な値を格納する
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const iframe = document.getElementById('pdfPreview');
+                    iframe.src = url;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        } catch( error ){
+            console.error('送信エラー:', error);
+        }
+    };
+
     return ( 
 
         <form className="resume-form">
@@ -239,14 +266,14 @@ export default function ResumeForm() {
             {currentForm === 4 && <ResumeForm5 data={formData} handleFormGroup={handleFormGroup} addFunction={addCertification} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 5 && <ResumeForm6 data={formData} textCount={textCount} handleFormData={handleFormData} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 6 && <ResumeForm7 data={formData} textCount={textCount} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} onPrev={PrevForm} submit={handleSubmit} />}
-            {currentForm === 7 && <PreviewWindow data={formData} onPrev={PrevForm} />}
+            {currentForm === 7 && <PreviewWindow data={formData} onPrev={PrevForm} PreviewPDF={PreviewPDF} />}
         </form>
     );
 }
 
 function ResumeForm1({ data, handleFormData, handleDate, onNext }) {
     return (
-        <div>
+        <Card>
             <div className='form-group'>
                 <Input type='text' label="姓" name="lastName" value={data.lastName} onChange={handleFormData} required helperText="例: 秋田" />
             </div>
@@ -271,7 +298,7 @@ function ResumeForm1({ data, handleFormData, handleDate, onNext }) {
                 <Input type='text' label="性別（任意）" name="gender" value={data.gender} onChange={handleFormData} required helperText="例: 女" />
             </div>
             <Button onClick={onNext}>次へ</Button>
-        </div>
+        </Card>
     );
 }
 
@@ -481,11 +508,13 @@ function ResumeForm7({ data, textCount, handleFormData, handleDate, onNext, onPr
     );
 };
 
-function PreviewWindow({ onPrev}) {
+function PreviewWindow({ onPrev, PreviewPDF}) {
 
     return (
         <div>
             {/* <Button variant="secondary">ダウンロード</Button> */}
+            <iframe id="pdfPreview"></iframe>
+            <Button onClick={PreviewPDF} disabled>PDFをロード</Button>
             <Button onClick={onPrev}>フォーム入力へ戻る</Button>
             <Link to="/">
                 <Button>モード選択へ</Button>

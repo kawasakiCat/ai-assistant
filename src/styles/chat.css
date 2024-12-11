@@ -36,20 +36,17 @@
 	padding: 10px;
   }
   
-.card {
+/* .card {
     position: relative;
-    /* max-width: 70%; */
     min-height: 400px;
     background: var(--bg-light);
     border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
-    
-    /* Neumorphic Shadows */
     box-shadow: 
         8px 8px 12px var(--shadow-dark),
         -8px -8px 12px var(--shadow-light);
-}
+} */
 
 /* Card Variations */
 /* .card-primary {
