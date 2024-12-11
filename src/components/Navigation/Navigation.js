@@ -79,6 +79,15 @@ const Navigation = () => {
             </Button>
           </Link>
         </div>
+        <div className="menu-item">
+          <Link to="/help" onClick={toggleMenu}>
+            <Button className="menu-item-button" variant="primary">
+              ヘルプ
+              <br />
+              使い方
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

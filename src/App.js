@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import PassewordForgotPage from './pages/PasswordForgotPage';
 import TitlePage from './pages/TitlePage';
+import HelpPage from './pages/HelpPage';
 import './styles/global.css';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/pwforgot" element={<PassewordForgotPage />} />
           <Route path="/title" element={<TitlePage />} />
+          <Route path="/help" element={<HelpPage />} />
         </Routes>
       </Router>
     </div>

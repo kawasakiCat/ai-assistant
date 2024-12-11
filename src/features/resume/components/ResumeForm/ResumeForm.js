@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Input from '../../../../components/common/Input/Input';
 import TextArea from "../../../../components/common/TextArea/TextArea";
 import Button from "../../../../components/common/Button/Button";
-import ModalExample from "../../../../ModalExample";
 import { Link } from "react-router-dom";
 import { searchAddress } from "../../services/SearchAddress";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -232,7 +231,6 @@ export default function ResumeForm() {
     return ( 
 
         <form className="resume-form">
-            <ModalExample />
             {currentForm === 0 && <ResumeForm1 data={formData} handleFormData={handleFormData} handleDate={handleDate} onNext={NextForm} />}
             {currentForm === 1 && <ResumeForm2 data={formData} handleFormData={handleFormData} handleAddress={handleAddress} onNext={NextForm} onPrev={PrevForm} />}
             {currentForm === 2 && <ResumeForm3 data={formData} handleFormGroup={handleFormGroup} addFunction={addEducation} onNext={NextForm} onPrev={PrevForm} />}
